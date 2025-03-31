@@ -7,3 +7,4 @@
 - Noa Voiturier
 - Ugo Cavel
 - Clement Noel
+- Manon Chagot

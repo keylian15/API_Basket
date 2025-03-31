@@ -3,9 +3,7 @@ info:
   title: Basketball API
   version: 1.0.0
   description: API pour récupérer les informations de basketball ainsi que des prédictions.
-# servers:
-#   - url: http://localhost:3000
-#     description: Serveur local
+
 paths:
   /teams:
     get:
@@ -69,6 +67,70 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching team"
+
+  /players:
+    get:
+      tags:
+        - Players
+      summary: Récupère tous les joueurs
+      responses:
+        "200":
+          description: Liste des joueurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Player"
+        "404":
+          description: Aucun joueur trouvé
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching players"
+  /players/{id}:
+    get:
+      tags:
+        - Players
+      summary: Récupère un joueur par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID du joueur
+      responses:
+        "200":
+          description: Le joueur trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+        "404":
+          description: Joueur non trouvé
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Player not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching player"
+
 components:
   schemas:
     Team:
@@ -95,3 +157,21 @@ components:
         year_founded:
           type: integer
           example: 1947
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        full_name:
+          type: string
+          example: "LeBron James"
+        first_name:
+          type: string
+          example: "LeBron"
+        last_name:
+          type: string
+          example: "James"
+        is_active:
+          type: boolean
+          example: true

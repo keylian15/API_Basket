@@ -11,7 +11,7 @@ export const getTeams = async (_req: Request, res: Response) => {
     }));
 
     if (teamsWithStringIds.length === 0) {
-      res.status(204).send("No teams found");
+      res.status(404).send("No teams found");
       return;
     }
     res.status(200).json(teamsWithStringIds);

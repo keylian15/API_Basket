@@ -4,13 +4,13 @@ import prisma from "../client";
 export const getPlayers = async (_req: Request, res: Response) => {
   try {
     const players = await prisma.players.findMany();
-    if (!players || players.length === 0) {
+    if (players.length === 0) {
       res.status(404).send("No players found");
       return;
     }
     res.status(200).send(players);
-  } catch (error) {
-    res.status(500).send("Error while fetching players");
+  } catch (error: any) {
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -29,7 +29,7 @@ export const getPlayer = async (req: Request, res: Response) => {
       return;
     }
     res.status(200).send(player);
-  } catch (error) {
-    res.status(500).send("Error while fetching player");
+  } catch (error: any) {
+    res.status(500).send({ error: error.message });
   }
 };

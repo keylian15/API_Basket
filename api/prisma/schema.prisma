@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model players {
+  id         Int      @id
+  full_name  String?  @db.VarChar(255)
+  first_name String?  @db.VarChar(255)
+  last_name  String?  @db.VarChar(255)
+  is_active  Boolean?
+
+  @@map("players") // Pour mapper avec le nom en bdd
+}
+
+model teams {
+  id           BigInt  @id
+  full_name    String? @db.VarChar(255)
+  abbreviation String? @db.VarChar(10)
+  nickname     String? @db.VarChar(255)
+  city         String? @db.VarChar(255)
+  state        String? @db.VarChar(255)
+  year_founded Int?
+
+  @@map("teams") // Pour mapper avec le nom en bdd
+}

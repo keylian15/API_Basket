@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: Basketball API
+  version: 1.0.0
+  description: API pour récupérer les informations de basketball ainsi que des prédictions.
+# servers:
+#   - url: http://localhost:3000
+#     description: Serveur local
+paths:
+  /teams:
+    get:
+      tags:
+        - Teams
+      summary: Récupère toutes les équipes
+      responses:
+        "200":
+          description: Liste des équipes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Team"
+        "204":
+          description: Aucune équipe trouvée
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching teams"
+  /teams/{id}:
+    get:
+      tags:
+        - Teams
+      summary: Récupère une équipe par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID de l'équipe
+      responses:
+        "200":
+          description: L'équipe trouvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "404":
+          description: Équipe non trouvée
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Team not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching team"
+components:
+  schemas:
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        full_name:
+          type: string
+          example: "Los Angeles Lakers"
+        abbreviation:
+          type: string
+          example: "LAL"
+        nickname:
+          type: string
+          example: "Lakers"
+        city:
+          type: string
+          example: "Los Angeles"
+        state:
+          type: string
+          example: "California"
+        year_founded:
+          type: integer
+          example: 1947

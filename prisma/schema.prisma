@@ -144,3 +144,104 @@ model users {
   password   String
   admin      Boolean? @default(false)
 }
+
+model draft_history {
+  person_id           BigInt
+  player_name         String? @db.VarChar(255)
+  season              Int
+  round_number        Int?
+  round_pick          Int?
+  overall_pick        Int?
+  draft_type          String? @db.VarChar(50)
+  team_id             BigInt?
+  team_city           String? @db.VarChar(255)
+  team_name           String? @db.VarChar(255)
+  team_abbreviation   String? @db.VarChar(10)
+  organization        String? @db.VarChar(255)
+  organization_type   String? @db.VarChar(255)
+  player_profile_flag String? @db.Char(1)
+
+  @@id([person_id, season])
+}
+
+model game {
+  season_id              Int?
+  team_id_home           BigInt?
+  team_abbreviation_home String?   @db.VarChar(10)
+  team_name_home         String?   @db.VarChar(255)
+  game_id                BigInt    @id
+  game_date              DateTime? @db.Timestamp(6)
+  matchup_home           String?   @db.VarChar(50)
+  wl_home                String?   @db.Char(1)
+  min                    Int?
+  fgm_home               Decimal?  @db.Decimal
+  fga_home               Decimal?  @db.Decimal
+  fg_pct_home            Decimal?  @db.Decimal
+  fg3m_home              Decimal?  @db.Decimal
+  fg3a_home              Decimal?  @db.Decimal
+  fg3_pct_home           Decimal?  @db.Decimal
+  ftm_home               Decimal?  @db.Decimal
+  fta_home               Decimal?  @db.Decimal
+  ft_pct_home            Decimal?  @db.Decimal
+  oreb_home              Decimal?  @db.Decimal
+  dreb_home              Decimal?  @db.Decimal
+  reb_home               Decimal?  @db.Decimal
+  ast_home               Decimal?  @db.Decimal
+  stl_home               Decimal?  @db.Decimal
+  blk_home               Decimal?  @db.Decimal
+  tov_home               Decimal?  @db.Decimal
+  pf_home                Decimal?  @db.Decimal
+  pts_home               Decimal?  @db.Decimal
+  plus_minus_home        Int?
+  video_available_home   String?   @db.Char(1)
+  team_id_away           BigInt?
+  team_abbreviation_away String?   @db.VarChar(10)
+  team_name_away         String?   @db.VarChar(255)
+  matchup_away           String?   @db.VarChar(50)
+  wl_away                String?   @db.Char(1)
+  fgm_away               Decimal?  @db.Decimal
+  fga_away               Decimal?  @db.Decimal
+  fg_pct_away            Decimal?  @db.Decimal
+  fg3m_away              Decimal?  @db.Decimal
+  fg3a_away              Decimal?  @db.Decimal
+  fg3_pct_away           Decimal?  @db.Decimal
+  ftm_away               Decimal?  @db.Decimal
+  fta_away               Decimal?  @db.Decimal
+  ft_pct_away            Decimal?  @db.Decimal
+  oreb_away              Decimal?  @db.Decimal
+  dreb_away              Decimal?  @db.Decimal
+  reb_away               Decimal?  @db.Decimal
+  ast_away               Decimal?  @db.Decimal
+  stl_away               Decimal?  @db.Decimal
+  blk_away               Decimal?  @db.Decimal
+  tov_away               Decimal?  @db.Decimal
+  pf_away                Decimal?  @db.Decimal
+  pts_away               Decimal?  @db.Decimal
+  plus_minus_away        Int?
+  video_available_away   String?   @db.Char(1)
+  season_type            String?   @db.VarChar(50)
+}
+
+model game_info {
+  game_id    BigInt    @id
+  game_date  DateTime? @db.Timestamp(6)
+  attendance Decimal?  @db.Decimal
+  game_time  String?   @db.VarChar(50)
+}
+
+model game_summary {
+  game_date_est                    DateTime? @db.Timestamp(6)
+  game_sequence                    Int?
+  game_id                          BigInt    @id
+  game_status_id                   Int?
+  game_status_text                 String?   @db.VarChar(255)
+  gamecode                         String?   @db.VarChar(50)
+  home_team_id                     BigInt?
+  visitor_team_id                  BigInt?
+  season                           Int?
+  live_period                      Int?
+  live_pc_time                     String?   @db.VarChar(50)
+  natl_tv_broadcaster_abbreviation String?   @db.VarChar(50)
+  live_period_time_bcast           String?   @db.VarChar(50)
+  wh_status                        Int?
+}

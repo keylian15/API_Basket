@@ -5,7 +5,7 @@ export const getTeams = async (_req: Request, res: Response) => {
   try {
     const teams = await prisma.teams.findMany();
 
-    const teamsWithStringIds = teams.map((team) => ({
+    const teamsWithStringIds = teams.map((team: any) => ({
       ...team,
       id: team.id.toString(),
     }));

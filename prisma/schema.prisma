@@ -136,13 +136,10 @@ model team_history {
 }
 
 model users {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique @db.VarChar(255)
-  pseudo     String   @unique @db.VarChar(50)
-  first_name String   @db.VarChar(100)
-  last_name  String   @db.VarChar(100)
-  password   String
-  admin      Boolean? @default(false)
+  id       Int      @id @default(autoincrement())
+  password String
+  email    String   @unique
+  is_admin Boolean? @default(false)
 }
 
 model draft_history {
@@ -231,7 +228,7 @@ model game_info {
 
 model game_summary {
   game_date_est                    DateTime? @db.Timestamp(6)
-  game_sequence                    Int?
+  game_sequence                    Decimal?  @db.Decimal
   game_id                          BigInt    @id
   game_status_id                   Int?
   game_status_text                 String?   @db.VarChar(255)
@@ -244,4 +241,64 @@ model game_summary {
   natl_tv_broadcaster_abbreviation String?   @db.VarChar(50)
   live_period_time_bcast           String?   @db.VarChar(50)
   wh_status                        Int?
+}
+
+model inactive_players {
+  game_id           BigInt
+  player_id         BigInt
+  first_name        String? @db.VarChar(255)
+  last_name         String? @db.VarChar(255)
+  jersey_num        String? @db.VarChar(10)
+  team_id           BigInt?
+  team_city         String? @db.VarChar(255)
+  team_name         String? @db.VarChar(255)
+  team_abbreviation String? @db.VarChar(10)
+
+  @@id([game_id, player_id])
+}
+
+model line_score {
+  game_date_est          DateTime? @db.Timestamp(6)
+  game_sequence          Decimal?  @db.Decimal
+  game_id                BigInt    @id
+  team_id_home           BigInt?
+  team_abbreviation_home String?   @db.VarChar(10)
+  team_city_name_home    String?   @db.VarChar(255)
+  team_nickname_home     String?   @db.VarChar(255)
+  team_wins_losses_home  String?   @db.VarChar(10)
+  pts_qtr1_home          Decimal?  @db.Decimal
+  pts_qtr2_home          Decimal?  @db.Decimal
+  pts_qtr3_home          Decimal?  @db.Decimal
+  pts_qtr4_home          Decimal?  @db.Decimal
+  pts_ot1_home           Decimal?  @db.Decimal
+  pts_ot2_home           Decimal?  @db.Decimal
+  pts_ot3_home           Decimal?  @db.Decimal
+  pts_ot4_home           Decimal?  @db.Decimal
+  pts_ot5_home           Decimal?  @db.Decimal
+  pts_ot6_home           Decimal?  @db.Decimal
+  pts_ot7_home           Decimal?  @db.Decimal
+  pts_ot8_home           Decimal?  @db.Decimal
+  pts_ot9_home           Decimal?  @db.Decimal
+  pts_ot10_home          Decimal?  @db.Decimal
+  pts_home               Decimal?  @db.Decimal
+  team_id_away           BigInt?
+  team_abbreviation_away String?   @db.VarChar(10)
+  team_city_name_away    String?   @db.VarChar(255)
+  team_nickname_away     String?   @db.VarChar(255)
+  team_wins_losses_away  String?   @db.VarChar(10)
+  pts_qtr1_away          Decimal?  @db.Decimal
+  pts_qtr2_away          Decimal?  @db.Decimal
+  pts_qtr3_away          Decimal?  @db.Decimal
+  pts_qtr4_away          Decimal?  @db.Decimal
+  pts_ot1_away           Decimal?  @db.Decimal
+  pts_ot2_away           Decimal?  @db.Decimal
+  pts_ot3_away           Decimal?  @db.Decimal
+  pts_ot4_away           Decimal?  @db.Decimal
+  pts_ot5_away           Decimal?  @db.Decimal
+  pts_ot6_away           Decimal?  @db.Decimal
+  pts_ot7_away           Decimal?  @db.Decimal
+  pts_ot8_away           Decimal?  @db.Decimal
+  pts_ot9_away           Decimal?  @db.Decimal
+  pts_ot10_away          Decimal?  @db.Decimal
+  pts_away               Decimal?  @db.Decimal
 }

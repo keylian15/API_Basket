@@ -3,7 +3,7 @@ import prisma from "../client";
 
 export const getPlayers = async (_req: Request, res: Response) => {
   try {
-    const players = await prisma.players.findMany();
+    const players = await prisma.data_joueur.findMany();
     if (players.length === 0) {
       res.status(404).send("No players found");
       return;
@@ -18,7 +18,7 @@ export const getPlayer = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const player = await prisma.players.findUnique({
+    const player = await prisma.data_joueur.findUnique({
       where: {
         id: Number(id),
       },

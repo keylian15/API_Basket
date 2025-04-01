@@ -125,14 +125,15 @@ model team_details {
   twitter            String?  @db.VarChar(255)
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model team_history {
-  team_id          BigInt
-  city             String @db.VarChar(255)
-  nickname         String @db.VarChar(255)
-  year_founded     Int
+  team_id          Int?
+  city             String?
+  nickname         String?
+  year_founded     Int?
   year_active_till Int?
 
-  @@id([team_id, city, nickname, year_founded])
+  @@ignore
 }
 
 model users {
@@ -301,4 +302,18 @@ model line_score {
   pts_ot9_away           Decimal?  @db.Decimal
   pts_ot10_away          Decimal?  @db.Decimal
   pts_away               Decimal?  @db.Decimal
+}
+
+model data_joueur {
+  id             Int     @id @default(autoincrement())
+  prenom         String?
+  nom            String?
+  prenom_nom     String?
+  debut_carriere Int?
+  fin_carriere   Int?
+  position       String?
+  date_naissance String?
+  universite     String?
+  age            Int?
+  experience     Int?
 }

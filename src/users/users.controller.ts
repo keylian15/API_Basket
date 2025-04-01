@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import prisma from "../client";
 import jwt from "jsonwebtoken";
-import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
+
+interface IUser {
+  email: string;
+  password: string;
+}
 
 export const getUsers = async (_req: Request, res: Response) => {
   try {
@@ -35,7 +39,7 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (
-  req: Request<{}, {}, Pick<User, "email" | "password">>,
+  req: Request<{}, {}, IUser, "email" | "password">,
   res: Response
 ) => {
   try {
@@ -157,7 +161,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const login = async (
-  req: Request<{}, {}, Pick<User, "email" | "password">>,
+  req: Request<{}, {}, Pick<IUser, "email" | "password">>,
   res: Response
 ) => {
   try {

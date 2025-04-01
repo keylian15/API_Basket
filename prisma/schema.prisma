@@ -14,7 +14,7 @@ model players {
   last_name  String?  @db.VarChar(255)
   is_active  Boolean?
 
-  @@map("players") // Pour mapper avec le nom en bdd
+  @@map("players")
 }
 
 model teams {
@@ -26,5 +26,121 @@ model teams {
   state        String? @db.VarChar(255)
   year_founded Int?
 
-  @@map("teams") // Pour mapper avec le nom en bdd
+  @@map("teams")
+}
+
+model common_player_info {
+  person_id                        BigInt    @id
+  first_name                       String?   @db.VarChar(255)
+  last_name                        String?   @db.VarChar(255)
+  display_first_last               String?   @db.VarChar(255)
+  display_last_comma_first         String?   @db.VarChar(255)
+  display_fi_last                  String?   @db.VarChar(255)
+  player_slug                      String?   @db.VarChar(255)
+  birthdate                        DateTime? @db.Timestamp(6)
+  school                           String?   @db.VarChar(255)
+  country                          String?   @db.VarChar(255)
+  last_affiliation                 String?   @db.VarChar(255)
+  height                           String?   @db.VarChar(10)
+  weight                           Int?
+  season_exp                       Decimal?  @db.Decimal
+  jersey                           String?   @db.VarChar(10)
+  position                         String?   @db.VarChar(50)
+  rosterstatus                     String?   @db.VarChar(10)
+  games_played_current_season_flag String?   @db.Char(1)
+  team_id                          BigInt?
+  team_name                        String?   @db.VarChar(255)
+  team_abbreviation                String?   @db.VarChar(10)
+  team_code                        String?   @db.VarChar(50)
+  team_city                        String?   @db.VarChar(255)
+  playercode                       String?   @db.VarChar(255)
+  from_year                        Decimal?  @db.Decimal
+  to_year                          Decimal?  @db.Decimal
+  dleague_flag                     String?   @db.Char(1)
+  nba_flag                         String?   @db.Char(1)
+  games_played_flag                String?   @db.Char(1)
+  draft_year                       String?   @db.VarChar(10)
+  draft_round                      String?   @db.VarChar(10)
+  draft_number                     String?   @db.VarChar(10)
+  greatest_75_flag                 String?   @db.Char(1)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model officials {
+  game_id     Decimal? @db.Decimal
+  official_id Decimal? @db.Decimal
+  first_name  String?  @db.VarChar(255)
+  last_name   String?  @db.VarChar(255)
+  jersey_num  Decimal? @db.Decimal
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model other_stats {
+  game_id                Decimal? @db.Decimal
+  league_id              String?  @db.VarChar(10)
+  team_id_home           Decimal? @db.Decimal
+  team_abbreviation_home String?  @db.VarChar(10)
+  team_city_home         String?  @db.VarChar(255)
+  pts_paint_home         Decimal? @db.Decimal
+  pts_2nd_chance_home    Decimal? @db.Decimal
+  pts_fb_home            Decimal? @db.Decimal
+  largest_lead_home      Decimal? @db.Decimal
+  lead_changes           Decimal? @db.Decimal
+  times_tied             Decimal? @db.Decimal
+  team_turnovers_home    Decimal? @db.Decimal
+  total_turnovers_home   Decimal? @db.Decimal
+  team_rebounds_home     Decimal? @db.Decimal
+  pts_off_to_home        Decimal? @db.Decimal
+  team_id_away           Decimal? @db.Decimal
+  team_abbreviation_away String?  @db.VarChar(10)
+  team_city_away         String?  @db.VarChar(255)
+  pts_paint_away         Decimal? @db.Decimal
+  pts_2nd_chance_away    Decimal? @db.Decimal
+  pts_fb_away            Decimal? @db.Decimal
+  largest_lead_away      Decimal? @db.Decimal
+  team_turnovers_away    Decimal? @db.Decimal
+  total_turnovers_away   Decimal? @db.Decimal
+  team_rebounds_away     Decimal? @db.Decimal
+  pts_off_to_away        Decimal? @db.Decimal
+
+  @@ignore
+}
+
+model team_details {
+  team_id            BigInt   @id
+  abbreviation       String?  @db.VarChar(10)
+  nickname           String?  @db.VarChar(255)
+  yearfounded        Decimal? @db.Decimal
+  city               String?  @db.VarChar(255)
+  arena              String?  @db.VarChar(255)
+  arenacapacity      Decimal? @db.Decimal
+  owner              String?  @db.VarChar(255)
+  generalmanager     String?  @db.VarChar(255)
+  headcoach          String?  @db.VarChar(255)
+  dleagueaffiliation String?  @db.VarChar(255)
+  facebook           String?  @db.VarChar(255)
+  instagram          String?  @db.VarChar(255)
+  twitter            String?  @db.VarChar(255)
+}
+
+model team_history {
+  team_id          BigInt
+  city             String @db.VarChar(255)
+  nickname         String @db.VarChar(255)
+  year_founded     Int
+  year_active_till Int?
+
+  @@id([team_id, city, nickname, year_founded])
+}
+
+model users {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique @db.VarChar(255)
+  pseudo     String   @unique @db.VarChar(50)
+  first_name String   @db.VarChar(100)
+  last_name  String   @db.VarChar(100)
+  password   String
+  admin      Boolean? @default(false)
 }

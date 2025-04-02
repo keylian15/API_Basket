@@ -3,6 +3,10 @@ info:
   title: Basketball API
   version: 1.0.0
   description: API pour récupérer les informations de basketball ainsi que des prédictions.
+servers:
+  - url: "http://62.72.18.63:11042"
+    description: "Serveur principal"
+
 tags:
   - name: Users
     description: Gestion et authentification des utilisateurs

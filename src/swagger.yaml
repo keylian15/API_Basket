@@ -5,21 +5,21 @@ info:
   description: API pour récupérer les informations de basketball ainsi que des prédictions.
 tags:
   - name: Users
-    description: User management and authentication
+    description: Gestion et authentification des utilisateurs
   - name: Players
-    description: Player management
+    description: Gestion des joueurs
   - name: Advanced
-    description: Advanced player statistics
+    description: Informations avancées des joueurs
   - name: OpponentStats
-    description: Opponent statistics per match
+    description: Statistiques des adversaires
   - name: PlayerDirectory
-    description: Player directory information
+    description: Annuaire des joueurs
   - name: PlayerParMatch
-    description: Player statistics per match
+    description: Statistiques des joueurs par match
   - name: Teams
-    description: Team management
+    description: Gestion des équipes
   - name: TeamStats
-    description: Team statistics per match
+    description: Statistiques des équipes par match
 
 paths:
   /users:
@@ -319,11 +319,11 @@ paths:
 
   /players:
     get:
-      summary: Get all players
+      summary: Récupère la liste des joueurs
       tags: [Players]
       responses:
         200:
-          description: List of players
+          description: Liste des joueurs récupérée
           content:
             application/json:
               schema:
@@ -334,22 +334,66 @@ paths:
                     items:
                       $ref: "#/components/schemas/PlayerCareerInfo"
         404:
-          description: No players found
+          description: Aucun joueur trouvé
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No players found"
         500:
-          description: Server error
+          description: Serveur error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /players/{id}:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching players"
+  /player:
+    post:
+      summary: Ajoute un joueur
+      tags: [Players]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerCareerInfo"
+      responses:
+        201:
+          description: Joueur ajouté
+          content:
+            application/json:
+              schema:
+                type: object
+                example: "Player added"
+        400:
+          description: Erreur de validation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing data"
+        500:
+          description: Serveur error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while adding player"
+  /player/{id}:
     get:
-      tags:
-        - Players
+      tags: [Players]
       summary: Récupère un joueur par son ID
       parameters:
         - name: id
@@ -368,10 +412,13 @@ paths:
         "404":
           description: Joueur non trouvé
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "Player not found"
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player not found"
         "500":
           description: Erreur serveur
           content:
@@ -382,6 +429,98 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching player"
+    patch:
+      tags: [Players]
+      summary: Met à jour les informations d'un joueur
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID du joueur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nom_joueur
+                - prem_saison
+                - dern_saison
+              properties:
+                nom_joueur:
+                  type: string
+                  example: "John Doe"
+                annee_naissance:
+                  type: integer
+                  example: 1955
+                prem_saison:
+                  type: integer
+                  example: 1985
+                dern_saison:
+                  type: integer
+                  example: 2000
+      responses:
+        "200":
+          description: Joueur mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player updated successfully"
+        "404":
+          description: Joueur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while updating player"
+    delete:
+      tags: [Players]
+      summary: Supprime un joueur par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID du joueur
+      responses:
+        "200":
+          description: Joueur supprimé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player deleted"
+        "404":
+          description: Joueur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                example: "Player not found"
 
   /teams:
     get:
@@ -648,10 +787,3 @@ components:
           type: number
           format: float
           example: 112.3
-
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          example: "Une erreur est survenue"

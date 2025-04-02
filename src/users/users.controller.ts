@@ -3,14 +3,9 @@ import prisma from "../client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-interface IUser {
-  email: string;
-  password: string;
-}
-
 export const getUsers = async (_req: Request, res: Response) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.users.findMany();
     if (users.length === 0) {
       res.status(404).send("No users found");
     } else {
@@ -23,7 +18,7 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const users = await prisma.user.findUnique({
+    const users = await prisma.users.findUnique({
       where: {
         id: Number(req.params.userId),
       },
@@ -38,10 +33,7 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export const createUser = async (
-  req: Request<{}, {}, IUser, "email" | "password">,
-  res: Response
-) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -51,7 +43,7 @@ export const createUser = async (
       return;
     }
 
-    const userExist = await prisma.user.findUnique({
+    const userExist = await prisma.users.findUnique({
       where: {
         email: email,
       },
@@ -64,11 +56,11 @@ export const createUser = async (
 
     const cryptedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.create({
+    await prisma.users.create({
       data: { email, password: cryptedPassword },
     });
 
-    res.status(201).send("User créer.");
+    res.status(201).send("User créé.");
   } catch (error: any) {
     res.status(500).send({ error: error.message });
   }
@@ -79,7 +71,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const userId = req.params.userId;
 
     // Verification Existance User.
-    const userIdExist = await prisma.user.findFirst({
+    const userIdExist = await prisma.users.findFirst({
       where: {
         id: Number(userId),
       },
@@ -94,7 +86,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     if (email) {
-      const emailExist = await prisma.user.findFirst({
+      const emailExist = await prisma.users.findFirst({
         where: {
           email: email,
           NOT: {
@@ -119,7 +111,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     const cryptedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.update({
+    await prisma.users.update({
       where: { id: Number(userId) },
       data: {
         email,
@@ -138,7 +130,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const userId = req.params.userId;
 
     // Verification Existance user.
-    const userIdExist = await prisma.user.findFirst({
+    const userIdExist = await prisma.users.findFirst({
       where: {
         id: Number(userId),
       },
@@ -150,7 +142,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
     // Fin Verification Existance user.
 
-    await prisma.user.delete({
+    await prisma.users.delete({
       where: { id: Number(userId) },
     });
 
@@ -160,10 +152,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (
-  req: Request<{}, {}, Pick<IUser, "email" | "password">>,
-  res: Response
-) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -174,7 +163,7 @@ export const login = async (
     }
 
     // On recherche un user
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: {
         email: email,
       },

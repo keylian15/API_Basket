@@ -7,241 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model players {
-  id         Int      @id
-  full_name  String?  @db.VarChar(255)
-  first_name String?  @db.VarChar(255)
-  last_name  String?  @db.VarChar(255)
-  is_active  Boolean?
-
-  @@map("players")
-}
-
-model teams {
-  id           BigInt  @id
-  full_name    String? @db.VarChar(255)
-  abbreviation String? @db.VarChar(10)
-  nickname     String? @db.VarChar(255)
-  city         String? @db.VarChar(255)
-  state        String? @db.VarChar(255)
-  year_founded Int?
-
-  @@map("teams")
-}
-
-model common_player_info {
-  person_id                        BigInt    @id
-  first_name                       String?   @db.VarChar(255)
-  last_name                        String?   @db.VarChar(255)
-  display_first_last               String?   @db.VarChar(255)
-  display_last_comma_first         String?   @db.VarChar(255)
-  display_fi_last                  String?   @db.VarChar(255)
-  player_slug                      String?   @db.VarChar(255)
-  birthdate                        DateTime? @db.Timestamp(6)
-  school                           String?   @db.VarChar(255)
-  country                          String?   @db.VarChar(255)
-  last_affiliation                 String?   @db.VarChar(255)
-  height                           String?   @db.VarChar(10)
-  weight                           Int?
-  season_exp                       Decimal?  @db.Decimal
-  jersey                           String?   @db.VarChar(10)
-  position                         String?   @db.VarChar(50)
-  rosterstatus                     String?   @db.VarChar(10)
-  games_played_current_season_flag String?   @db.Char(1)
-  team_id                          BigInt?
-  team_name                        String?   @db.VarChar(255)
-  team_abbreviation                String?   @db.VarChar(10)
-  team_code                        String?   @db.VarChar(50)
-  team_city                        String?   @db.VarChar(255)
-  playercode                       String?   @db.VarChar(255)
-  from_year                        Decimal?  @db.Decimal
-  to_year                          Decimal?  @db.Decimal
-  dleague_flag                     String?   @db.Char(1)
-  nba_flag                         String?   @db.Char(1)
-  games_played_flag                String?   @db.Char(1)
-  draft_year                       String?   @db.VarChar(10)
-  draft_round                      String?   @db.VarChar(10)
-  draft_number                     String?   @db.VarChar(10)
-  greatest_75_flag                 String?   @db.Char(1)
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model officials {
-  game_id     Decimal? @db.Decimal
-  official_id Decimal? @db.Decimal
-  first_name  String?  @db.VarChar(255)
-  last_name   String?  @db.VarChar(255)
-  jersey_num  Decimal? @db.Decimal
-
-  @@ignore
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model other_stats {
-  game_id                Decimal? @db.Decimal
-  league_id              String?  @db.VarChar(10)
-  team_id_home           Decimal? @db.Decimal
-  team_abbreviation_home String?  @db.VarChar(10)
-  team_city_home         String?  @db.VarChar(255)
-  pts_paint_home         Decimal? @db.Decimal
-  pts_2nd_chance_home    Decimal? @db.Decimal
-  pts_fb_home            Decimal? @db.Decimal
-  largest_lead_home      Decimal? @db.Decimal
-  lead_changes           Decimal? @db.Decimal
-  times_tied             Decimal? @db.Decimal
-  team_turnovers_home    Decimal? @db.Decimal
-  total_turnovers_home   Decimal? @db.Decimal
-  team_rebounds_home     Decimal? @db.Decimal
-  pts_off_to_home        Decimal? @db.Decimal
-  team_id_away           Decimal? @db.Decimal
-  team_abbreviation_away String?  @db.VarChar(10)
-  team_city_away         String?  @db.VarChar(255)
-  pts_paint_away         Decimal? @db.Decimal
-  pts_2nd_chance_away    Decimal? @db.Decimal
-  pts_fb_away            Decimal? @db.Decimal
-  largest_lead_away      Decimal? @db.Decimal
-  team_turnovers_away    Decimal? @db.Decimal
-  total_turnovers_away   Decimal? @db.Decimal
-  team_rebounds_away     Decimal? @db.Decimal
-  pts_off_to_away        Decimal? @db.Decimal
-
-  @@ignore
-}
-
-model team_details {
-  team_id            BigInt   @id
-  abbreviation       String?  @db.VarChar(10)
-  nickname           String?  @db.VarChar(255)
-  yearfounded        Decimal? @db.Decimal
-  city               String?  @db.VarChar(255)
-  arena              String?  @db.VarChar(255)
-  arenacapacity      Decimal? @db.Decimal
-  owner              String?  @db.VarChar(255)
-  generalmanager     String?  @db.VarChar(255)
-  headcoach          String?  @db.VarChar(255)
-  dleagueaffiliation String?  @db.VarChar(255)
-  facebook           String?  @db.VarChar(255)
-  instagram          String?  @db.VarChar(255)
-  twitter            String?  @db.VarChar(255)
-}
-
-model team_history {
-  team_id          BigInt
-  city             String @db.VarChar(255)
-  nickname         String @db.VarChar(255)
-  year_founded     Int
-  year_active_till Int?
-
-  @@id([team_id, city, nickname, year_founded])
-}
-
 model users {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique @db.VarChar(255)
-  pseudo     String   @unique @db.VarChar(50)
-  first_name String   @db.VarChar(100)
-  last_name  String   @db.VarChar(100)
-  password   String
-  admin      Boolean? @default(false)
+  id       Int      @id @default(autoincrement())
+  password String
+  email    String   @unique
+  is_admin Boolean? @default(false)
 }
 
-model draft_history {
-  person_id           BigInt
-  player_name         String? @db.VarChar(255)
-  season              Int
-  round_number        Int?
-  round_pick          Int?
-  overall_pick        Int?
-  draft_type          String? @db.VarChar(50)
-  team_id             BigInt?
-  team_city           String? @db.VarChar(255)
-  team_name           String? @db.VarChar(255)
-  team_abbreviation   String? @db.VarChar(10)
-  organization        String? @db.VarChar(255)
-  organization_type   String? @db.VarChar(255)
-  player_profile_flag String? @db.Char(1)
-
-  @@id([person_id, season])
+model player_career_info {
+  id_joueur       Int    @id
+  nom_joueur      String @db.VarChar(100)
+  annee_naissance Int?
+  prem_saison     Int
+  dern_saison     Int
 }
 
-model game {
-  season_id              Int?
-  team_id_home           BigInt?
-  team_abbreviation_home String?   @db.VarChar(10)
-  team_name_home         String?   @db.VarChar(255)
-  game_id                BigInt    @id
-  game_date              DateTime? @db.Timestamp(6)
-  matchup_home           String?   @db.VarChar(50)
-  wl_home                String?   @db.Char(1)
-  min                    Int?
-  fgm_home               Decimal?  @db.Decimal
-  fga_home               Decimal?  @db.Decimal
-  fg_pct_home            Decimal?  @db.Decimal
-  fg3m_home              Decimal?  @db.Decimal
-  fg3a_home              Decimal?  @db.Decimal
-  fg3_pct_home           Decimal?  @db.Decimal
-  ftm_home               Decimal?  @db.Decimal
-  fta_home               Decimal?  @db.Decimal
-  ft_pct_home            Decimal?  @db.Decimal
-  oreb_home              Decimal?  @db.Decimal
-  dreb_home              Decimal?  @db.Decimal
-  reb_home               Decimal?  @db.Decimal
-  ast_home               Decimal?  @db.Decimal
-  stl_home               Decimal?  @db.Decimal
-  blk_home               Decimal?  @db.Decimal
-  tov_home               Decimal?  @db.Decimal
-  pf_home                Decimal?  @db.Decimal
-  pts_home               Decimal?  @db.Decimal
-  plus_minus_home        Int?
-  video_available_home   String?   @db.Char(1)
-  team_id_away           BigInt?
-  team_abbreviation_away String?   @db.VarChar(10)
-  team_name_away         String?   @db.VarChar(255)
-  matchup_away           String?   @db.VarChar(50)
-  wl_away                String?   @db.Char(1)
-  fgm_away               Decimal?  @db.Decimal
-  fga_away               Decimal?  @db.Decimal
-  fg_pct_away            Decimal?  @db.Decimal
-  fg3m_away              Decimal?  @db.Decimal
-  fg3a_away              Decimal?  @db.Decimal
-  fg3_pct_away           Decimal?  @db.Decimal
-  ftm_away               Decimal?  @db.Decimal
-  fta_away               Decimal?  @db.Decimal
-  ft_pct_away            Decimal?  @db.Decimal
-  oreb_away              Decimal?  @db.Decimal
-  dreb_away              Decimal?  @db.Decimal
-  reb_away               Decimal?  @db.Decimal
-  ast_away               Decimal?  @db.Decimal
-  stl_away               Decimal?  @db.Decimal
-  blk_away               Decimal?  @db.Decimal
-  tov_away               Decimal?  @db.Decimal
-  pf_away                Decimal?  @db.Decimal
-  pts_away               Decimal?  @db.Decimal
-  plus_minus_away        Int?
-  video_available_away   String?   @db.Char(1)
-  season_type            String?   @db.VarChar(50)
+model player_par_match {
+  saison             Int
+  id_joueur          Int
+  nom_joueur         String @db.VarChar(100)
+  annee_naissance    Int?
+  abr_equipe         String @db.VarChar(3)
+  minutes_jouees     Float?
+  pourcent_fg        Float?
+  pourcent_trois_pts Float?
+  pourcent_efg       Float?
+  pourcent_ft        Float?
+  rebond             Int
+  passe              Int
+  interception       Int?
+  contre             Int?
+  points             Int
+
+  @@id([saison, id_joueur, abr_equipe])
 }
 
-model game_info {
-  game_id    BigInt    @id
-  game_date  DateTime? @db.Timestamp(6)
-  attendance Decimal?  @db.Decimal
-  game_time  String?   @db.VarChar(50)
-}
-
-model game_summary {
-  game_date_est                    DateTime? @db.Timestamp(6)
-  game_sequence                    Int?
-  game_id                          BigInt    @id
-  game_status_id                   Int?
-  game_status_text                 String?   @db.VarChar(255)
-  gamecode                         String?   @db.VarChar(50)
-  home_team_id                     BigInt?
-  visitor_team_id                  BigInt?
-  season                           Int?
-  live_period                      Int?
-  live_pc_time                     String?   @db.VarChar(50)
-  natl_tv_broadcaster_abbreviation String?   @db.VarChar(50)
-  live_period_time_bcast           String?   @db.VarChar(50)
-  wh_status                        Int?
+model advanced {
+  id_joueur       Int    @id
+  saison          Int
+  nom_joueur      String @db.VarChar(100)
+  abr_equipe      String @db.VarChar(3)
+  poste           String @db.VarChar(100)
+  per             Int
+  annee_naissance Int?
 }

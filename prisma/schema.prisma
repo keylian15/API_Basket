@@ -58,6 +58,7 @@ model advanced {
 model opponent_stats_par_match {
   abr_equipe         String   @db.VarChar(3)
   saison             Int
+  lg                 String?  @db.VarChar(3)
   team_name          String?  @db.VarChar(100)
   qualif             Boolean?
   partie_jouee       Int?
@@ -109,7 +110,8 @@ model team {
 model team_stat_par_match {
   saison           Int
   abr_equipe       String  @db.VarChar(3)
-  lg               String  @db.VarChar(3)
+  lg               String? @db.VarChar(3)
+  team_name        String? @db.VarChar(100)
   qualif           Boolean
   partie_jouee     Int?
   minute_par_match Float?
@@ -135,5 +137,5 @@ model team_stat_par_match {
   pts_par_match    Float?
   team             team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([saison, abr_equipe, lg, qualif])
+  @@id([saison, abr_equipe, qualif])
 }

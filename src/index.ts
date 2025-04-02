@@ -12,7 +12,7 @@ import { playerDirectory } from "./playersDirectory/playersDirectory.router";
 import { opponentStatsParMatch } from "./opponentStatsParMatch/opponentStatsParMatch.router";
 
 export const app = express();
-const port = 1142;
+const port = 11042;
 
 // Charger la spécification Swagger
 const swaggerDocument = YAML.load(path.join(__dirname, "./swagger.yaml"));

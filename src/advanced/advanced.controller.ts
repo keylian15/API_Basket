@@ -17,6 +17,10 @@ export const getAdvanceds = async (_req: Request, res: Response) => {
 
 export const getAdvanced = async (req: Request, res: Response) => {
   const { id } = req.params;
+  if (!id) {
+    res.status(400).json({ error: "Missing id" });
+    return;
+  }
 
   try {
     const advanced = await prisma.advanced.findUnique({

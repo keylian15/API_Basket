@@ -17,6 +17,10 @@ export const getPlayersParMatch = async (_req: Request, res: Response) => {
 
 export const getPlayerParMatch = async (req: Request, res: Response) => {
   const { id_joueur, saison, abr } = req.params;
+  if (!id_joueur || !saison || !abr) {
+    res.status(400).json({ error: "Missing parameters" });
+    return;
+  }
 
   try {
     const player = await prisma.player_par_match.findFirst({

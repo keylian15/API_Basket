@@ -17,6 +17,10 @@ export const getTeams = async (_req: Request, res: Response) => {
 
 export const getTeam = async (req: Request, res: Response) => {
   const { saison, arb } = req.params;
+  if (!saison || !arb) {
+    res.status(400).json({ error: "Missing parameters" });
+    return;
+  }
   try {
     const team = await prisma.team.findFirst({
       where: {

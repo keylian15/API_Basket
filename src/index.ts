@@ -2,7 +2,7 @@ import express from "express";
 import { teamsRouter } from "./teams/teams.router";
 import { playerRouter } from "./players/players.router";
 import { userRouter } from "./users/users.router";
-import { playerParMatchRouter } from "./players_par_match/players_par_match.router";
+import { playerParMatchRouter } from "./playersParMatch/playersParMatch.router";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";

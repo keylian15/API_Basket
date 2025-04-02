@@ -803,6 +803,107 @@ paths:
                     type: string
                     example: "Error while fetching user"
 
+  /playersParMatch:
+    get:
+      summary: Obtenez toutes les statistiques des joueurs par match
+      tags: [PlayerParMatch]
+      responses:
+        200:
+          description: Liste des statistiques des joueurs par match
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PlayerParMatch"
+        404:
+          description: Aucune statistique de joueur trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Stats not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching user"
+
+  /playerParMatch/{id_joueur}/{saison}/{abr_team}:
+    get:
+      summary: Obtenez les statistiques des joueurs par match par ID, saison et équipe
+      tags: [PlayerParMatch]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          schema:
+            type: integer
+          description: Identifiant du joueur
+        - in: path
+          name: saison
+          required: true
+          schema:
+            type: integer
+          description: Année de la saison
+        - in: path
+          name: abr_equipe
+          required: true
+          schema:
+            type: string
+          description: Abréviation de l'équipe
+      responses:
+        200:
+          description: Statistiques du joueur trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PlayerParMatch"
+        400:
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ABR"
+        404:
+          description: Statistiques du joueur non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Stat not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching user"
+
   /teams:
     get:
       tags:

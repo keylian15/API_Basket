@@ -149,6 +149,16 @@ export const deletePlayer = async (req: Request, res: Response) => {
       res.status(400).json({ error: "ID required" });
       return;
     }
+    const playerExist = await prisma.player_career_info.findUnique({
+      where: {
+        id_joueur: Number(id),
+      },
+    });
+
+    if (!playerExist) {
+      res.status(404).json({ error: "Player not found" });
+    }
+
     await prisma.player_career_info.delete({
       where: {
         id_joueur: Number(id),

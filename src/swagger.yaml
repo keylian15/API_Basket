@@ -104,28 +104,13 @@ paths:
             application/json:
               schema:
                 type: object
-              
-        "400":
-          description: Requête invalide
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: "Email et mot de passe sont requis."
-        "500":
-          description: Erreur serveur
-          content:
-            application/json:
-              schema:
-                type: object
                 properties:
                   error:
                     type: string
                     example: "Error while creating user"
   /user/{userId}:
     get:
-      tags:
-        - Users
+      tags: [Users]
       summary: Récupère un utilisateur par son ID
       parameters:
         - name: userId
@@ -144,10 +129,13 @@ paths:
         "404":
           description: Utilisateur non trouvé
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "User not found"
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "User not found"
         "500":
           description: Erreur serveur
           content:
@@ -159,8 +147,7 @@ paths:
                     type: string
                     example: "Error while fetching user"
     patch:
-      tags:
-        - Users
+      tags: [Users]
       summary: Met à jour un utilisateur
       security:
         - bearerAuth: []
@@ -193,17 +180,23 @@ paths:
         "200":
           description: Utilisateur mis à jour avec succès
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "User mis à jour."
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User updated"
         "400":
           description: Requête invalide
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "L'email est manquant."
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Email is missing"
         "500":
           description: Erreur serveur
           content:
@@ -215,8 +208,7 @@ paths:
                     type: string
                     example: "Error while updating user"
     delete:
-      tags:
-        - Users
+      tags: [Users]
       summary: Supprime un utilisateur
       security:
         - bearerAuth: []
@@ -231,17 +223,23 @@ paths:
         "200":
           description: Utilisateur supprimé avec succès
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "User supprimé."
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deleted"
         "400":
           description: Requête invalide
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "L'user n'existe pas."
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "User not found"
         "500":
           description: Erreur serveur
           content:
@@ -254,8 +252,7 @@ paths:
                     example: "Error while deleting user"
   /user/login:
     post:
-      tags:
-        - Users
+      tags: [Users]
       summary: Connecte un utilisateur et retourne un token JWT
       requestBody:
         required: true
@@ -292,17 +289,23 @@ paths:
         "400":
           description: Requête invalide
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "Email et mot de passe sont requis."
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Password is incorrect"
         "404":
           description: Utilisateur non trouvé
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "Aucun utilisateur avec cette email."
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "User not found"
         "500":
           description: Erreur serveur
           content:

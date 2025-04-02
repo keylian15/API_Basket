@@ -144,7 +144,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     });
 
     if (!userIdExist) {
-      res.status(400).json({ error: "User does not exist" });
+      res.status(400).json({ error: "User not found" });
       return;
     }
     // Fin Verification Existance user.

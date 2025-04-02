@@ -704,6 +704,105 @@ paths:
                     type: string
                     example: "Error while fetching opponent stats"
 
+  /playersDirectory:
+    get:
+      summary: Obtenez le répertoire complet des joueurs
+      tags: [PlayerDirectory]
+      responses:
+        200:
+          description: Liste du répertoire des joueurs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PlayerDirectory"
+        404:
+          description: Aucun répertoire de joueurs trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching user"
+  /playerDirectory/{nom_joueur}/{dateNaissance}:
+    get:
+      summary: Obtenez le répertoire d'un joueur par nom et date de naissance
+      tags: [PlayerDirectory]
+      parameters:
+        - in: path
+          name: nom_joueur
+          required: true
+          schema:
+            type: string
+            example: "michael jordan"
+            description: Nom du joueur
+          description: Nom du joueur
+
+        - in: path
+          name: dateNaissance
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "1990-01-01"
+          description: Date de naissance
+      responses:
+        200:
+          description: Répertoire du joueur trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PlayerDirectory"
+        400:
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        404:
+          description: Répertoire du joueur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching user"
+
   /teams:
     get:
       tags:

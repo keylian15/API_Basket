@@ -8,29 +8,35 @@ export const getUsers = async (_req: Request, res: Response) => {
   try {
     const users = await prisma.users.findMany();
     if (users.length === 0) {
-      res.status(404).send("No users found");
+      res.status(404).json({ error: "No users found" });
     } else {
-      res.status(200).send(users);
+      res.status(200).json({ data: users });
     }
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const getUser = async (req: Request, res: Response) => {
   try {
+    const id = req.params.userId;
+    if (!id) {
+      res.status(400).json({ error: "Missing parameters" });
+      return;
+    }
+
     const users = await prisma.users.findUnique({
       where: {
-        id: Number(req.params.userId),
+        id: Number(id),
       },
     });
     if (!users) {
-      res.status(404).send("User not found");
+      res.status(404).json({ error: "User not found" });
     } else {
-      res.status(200).send(users);
+      res.status(200).json({ data: users });
     }
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -40,7 +46,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     // Vérification des champs requis
     if (!email || !password) {
-      res.status(400).send("Email et mot de passe sont requis.");
+      res.status(400).json({ error: "Email and password are required" });
       return;
     }
 
@@ -51,7 +57,7 @@ export const createUser = async (req: Request, res: Response) => {
     });
 
     if (userExist) {
-      res.status(400).send("Email déjà utilisé.");
+      res.status(400).json({ error: "Email already used" });
       return;
     }
 
@@ -61,9 +67,9 @@ export const createUser = async (req: Request, res: Response) => {
       data: { email, password: cryptedPassword },
     });
 
-    res.status(201).send("User créé.");
+    res.status(201).json({ message: "User created successfully" });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -79,7 +85,7 @@ export const updateUser = async (req: Request, res: Response) => {
     });
 
     if (!userIdExist) {
-      res.status(400).send("L'user n'existe pas.");
+      res.status(400).json({ error: "The user does not exist" });
       return;
     }
     // Fin Verification Existance user.
@@ -97,16 +103,16 @@ export const updateUser = async (req: Request, res: Response) => {
       });
 
       if (emailExist) {
-        res.status(400).send("L'email est déjà prit.");
+        res.status(400).json({ error: "The email is already taken" });
         return;
       }
     } else {
-      res.status(400).send("L'email est manquant.");
+      res.status(400).json({ error: "Email is missing" });
       return;
     }
 
     if (!password) {
-      res.status(400).send("Le mot de passe est manquant.");
+      res.status(400).json({ error: "The password is missing" });
       return;
     }
 
@@ -120,9 +126,9 @@ export const updateUser = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).send(`User mis à jour.`);
+    res.status(200).json({ message: "User updated successfully" });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -138,7 +144,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     });
 
     if (!userIdExist) {
-      res.status(400).send("L'user n'existe pas.");
+      res.status(400).json({ error: "User does not exist" });
       return;
     }
     // Fin Verification Existance user.
@@ -147,9 +153,9 @@ export const deleteUser = async (req: Request, res: Response) => {
       where: { id: Number(userId) },
     });
 
-    res.status(200).send("User supprimé.");
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -159,7 +165,7 @@ export const login = async (req: Request, res: Response) => {
 
     // Vérification des champs requis
     if (!email || !password) {
-      res.status(400).send("Email et mot de passe sont requis.");
+      res.status(400).json({ error: "Email and password are required" });
       return;
     }
 
@@ -172,14 +178,14 @@ export const login = async (req: Request, res: Response) => {
 
     // Verification existance d'un user
     if (!user) {
-      res.status(404).send("Aucun utilisateur avec cette email.");
+      res.status(404).json({ error: "No user found with this email" });
       return;
     }
 
     // Inserer ici la verification du mot de passe.
     const samePassword = await bcrypt.compare(password, user!.password);
     if (!samePassword) {
-      res.status(400).send("Incorrect Password.");
+      res.status(400).json({ error: "Incorrect password" });
       return;
     }
 
@@ -196,8 +202,8 @@ export const login = async (req: Request, res: Response) => {
     );
 
     // Réponse avec le token
-    res.status(201).send({ token, userId: user.id });
+    res.status(201).json({ data: { token, userId: user.id } });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

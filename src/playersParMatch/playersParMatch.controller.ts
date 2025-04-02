@@ -1,3 +1,4 @@
+// Fihchier utilisant la table player_par_match
 import { Request, Response } from "express";
 import prisma from "../client";
 
@@ -15,9 +16,12 @@ export const getPlayersParMatch = async (_req: Request, res: Response) => {
 };
 
 export const getPlayerParMatch = async (req: Request, res: Response) => {
-  const { id_joueur, saison, abr } = req.params;
-
   try {
+    const { id_joueur, saison, abr } = req.params;
+    if (!id_joueur || !saison || !abr) {
+      res.status(400).json({ error: "Missing parameters" });
+      return;
+    }
     const player = await prisma.player_par_match.findFirst({
       where: {
         id_joueur: Number(id_joueur),

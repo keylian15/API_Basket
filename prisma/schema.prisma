@@ -33,21 +33,105 @@ model player_par_match {
   pourcent_trois_pts Float?
   pourcent_efg       Float?
   pourcent_ft        Float?
-  rebond             Int
-  passe              Int
+  rebond             Int?
+  passe              Int?
   interception       Int?
   contre             Int?
-  points             Int
+  points             Int?
 
   @@id([saison, id_joueur, abr_equipe])
 }
 
 model advanced {
-  id_joueur       Int    @id
+  id_joueur       Int     @id
   saison          Int
-  nom_joueur      String @db.VarChar(100)
-  abr_equipe      String @db.VarChar(3)
-  poste           String @db.VarChar(100)
-  per             Int
+  nom_joueur      String  @db.VarChar(100)
+  abr_equipe      String  @db.VarChar(3)
+  sexe            String? @db.Char(1)
+  poste           String  @db.VarChar(100)
+  per             Int?
   annee_naissance Int?
+}
+
+model opponent_stats_par_match {
+  abr_equipe         String   @db.VarChar(3)
+  saison             Int
+  team_name          String?  @db.VarChar(100)
+  qualif             Boolean?
+  partie_jouee       Int?
+  minute_par_match   Float?
+  opp_fg_par_match   Float?
+  opp_fga_par_match  Float?
+  opp_fg_pourcent    Float?
+  opp_x3p_par_match  Float?
+  opp_x3pa_par_match Float?
+  opp_x3p_pourcent   Float?
+  opp_x2p_par_match  Float?
+  opp_x2pa_par_match Float?
+  opp_x2p_pourcent   Float?
+  opp_ft_par_match   Float?
+  opp_fta_par_match  Float?
+  opp_ft_pourcent    Float?
+  opp_orb_par_match  Float?
+  opp_drb_par_match  Float?
+  opp_trb_par_match  Float?
+  opp_ast_par_match  Float?
+  opp_stl_par_match  Float?
+  opp_blk_par_match  Float?
+  opp_pf_par_match   Float?
+  opp_pts_par_match  Float?
+  team               team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
+}
+
+model player_directory {
+  nom_joueur     String   @db.VarChar(100)
+  date_naissance DateTime @db.Date
+  taille         Int?
+  poids          Int?
+
+  @@id([nom_joueur, date_naissance])
+}
+
+model team {
+  abr_equipe               String                    @db.VarChar(3)
+  saison                   Int
+  team_name                String                    @db.VarChar(100)
+  opponent_stats_par_match opponent_stats_par_match?
+  team_stat_par_match      team_stat_par_match[]
+
+  @@id([abr_equipe, saison])
+}
+
+model team_stat_par_match {
+  saison           Int
+  abr_equipe       String  @db.VarChar(3)
+  lg               String  @db.VarChar(3)
+  qualif           Boolean
+  partie_jouee     Int?
+  minute_par_match Float?
+  fg_par_match     Float?
+  fga_par_match    Float?
+  fg_pourcent      Float?
+  x3p_par_match    Float?
+  x3pa_par_match   Float?
+  x3p_pourcent     Float?
+  x2p_par_match    Float?
+  x2pa_par_match   Float?
+  x2p_pourcent     Float?
+  ft_par_match     Float?
+  fta_par_match    Float?
+  ft_pourcent      Float?
+  orb_par_match    Float?
+  drb_par_match    Float?
+  trb_par_match    Float?
+  ast_par_match    Float?
+  stl_par_match    Float?
+  blk_par_match    Float?
+  pf_par_match     Float?
+  pts_par_match    Float?
+  team             team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([saison, abr_equipe, lg, qualif])
 }

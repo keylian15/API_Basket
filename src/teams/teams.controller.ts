@@ -1,43 +1,42 @@
-// import { Request, Response } from "express";
-// import prisma from "../client";
+import { Request, Response } from "express";
+import prisma from "../client";
 
-// export const getTeams = async (_req: Request, res: Response) => {
-//   try {
-//     const teams = await prisma.teams.findMany();
+export const getTeams = async (_req: Request, res: Response) => {
+  try {
+    const teams = await prisma.team.findMany();
 
-//     const teamsWithStringIds = teams.map((team: any) => ({
-//       ...team,
-//       id: team.id.toString(),
-//     }));
+    if (teams.length === 0) {
+      res.status(404).json({ error: "No teams found" });
+      return;
+    }
+    res.status(200).json({ data: teams });
+  } catch (error) {
+    res.status(500).json({ error: "Error while fetching teams" });
+  }
+};
 
-//     if (teamsWithStringIds.length === 0) {
-//       res.status(404).json({ error: "No teams found" });
-//       return;
-//     }
-//     res.status(200).json(teamsWithStringIds);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error while fetching teams" });
-//   }
-// };
+export const getTeam = async (req: Request, res: Response) => {
+  try {
+    const { saison, arb } = req.params;
+    if (!saison || !arb) {
+      res.status(400).json({ error: "Missing parameters" });
+      return;
+    }
 
-// export const getTeam = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   try {
-//     const team = await prisma.teams.findUnique({
-//       where: {
-//         id: BigInt(id),
-//       },
-//     });
+    const team = await prisma.team.findFirst({
+      where: {
+        abr_equipe: arb,
+        saison: Number(saison),
+      },
+    });
 
-//     if (!team) {
-//       res.status(404).json({ error: "Team not found" });
-//       return;
-//     }
+    if (!team) {
+      res.status(404).json({ error: "Team not found" });
+      return;
+    }
 
-//     const teamWithStringId = { ...team, id: team.id.toString() };
-
-//     res.status(200).json(teamWithStringId);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error while fetching team" });
-//   }
-// };
+    res.status(200).json({ data: team });
+  } catch (error) {
+    res.status(500).json({ error: "Error while fetching team" });
+  }
+};

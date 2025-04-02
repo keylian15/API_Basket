@@ -1,0 +1,472 @@
+openapi: 3.0.0
+info:
+  title: Basketball API
+  version: 1.0.0
+  description: API pour récupérer les informations de basketball ainsi que des prédictions.
+
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Récupère tous les utilisateurs
+      responses:
+        "200":
+          description: Liste des utilisateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: Aucun utilisateur trouvé
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "No users found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching users"
+  /user:
+    post:
+      tags:
+        - Users
+      summary: Crée un nouvel utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "password123"
+      responses:
+        "201":
+          description: Utilisateur créé avec succès
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "User créé."
+        "400":
+          description: Requête invalide
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Email et mot de passe sont requis."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating user"
+  /user/{userId}:
+    get:
+      tags:
+        - Users
+      summary: Récupère un utilisateur par son ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de l'utilisateur
+      responses:
+        "200":
+          description: L'utilisateur trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Utilisateur non trouvé
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "User not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching user"
+    patch:
+      tags:
+        - Users
+      summary: Met à jour un utilisateur
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de l'utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "updated@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "newpassword123"
+      responses:
+        "200":
+          description: Utilisateur mis à jour avec succès
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "User mis à jour."
+        "400":
+          description: Requête invalide
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "L'email est manquant."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while updating user"
+    delete:
+      tags:
+        - Users
+      summary: Supprime un utilisateur
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de l'utilisateur
+      responses:
+        "200":
+          description: Utilisateur supprimé avec succès
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "User supprimé."
+        "400":
+          description: Requête invalide
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "L'user n'existe pas."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting user"
+  /user/login:
+    post:
+      tags:
+        - Users
+      summary: Connecte un utilisateur et retourne un token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "password123"
+      responses:
+        "201":
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  userId:
+                    type: integer
+                    example: 1
+        "400":
+          description: Requête invalide
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Email et mot de passe sont requis."
+        "404":
+          description: Utilisateur non trouvé
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Aucun utilisateur avec cette email."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while logging in"
+
+  /players:
+    get:
+      tags:
+        - Players
+      summary: Récupère tous les joueurs
+      responses:
+        "200":
+          description: Liste des joueurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Player"
+        "404":
+          description: Aucun joueur trouvé
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching players"
+  /players/{id}:
+    get:
+      tags:
+        - Players
+      summary: Récupère un joueur par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID du joueur
+      responses:
+        "200":
+          description: Le joueur trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+        "404":
+          description: Joueur non trouvé
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Player not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching player"
+
+  /teams:
+    get:
+      tags:
+        - Teams
+      summary: Récupère toutes les équipes
+      responses:
+        "200":
+          description: Liste des équipes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Team"
+        "204":
+          description: Aucune équipe trouvée
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching teams"
+  /teams/{id}:
+    get:
+      tags:
+        - Teams
+      summary: Récupère une équipe par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID de l'équipe
+      responses:
+        "200":
+          description: L'équipe trouvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "404":
+          description: Équipe non trouvée
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Team not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching team"
+
+                 
+  
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        full_name:
+          type: string
+          example: "Los Angeles Lakers"
+        abbreviation:
+          type: string
+          example: "LAL"
+        nickname:
+          type: string
+          example: "Lakers"
+        city:
+          type: string
+          example: "Los Angeles"
+        state:
+          type: string
+          example: "California"
+        year_founded:
+          type: integer
+          example: 1947
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        full_name:
+          type: string
+          example: "LeBron James"
+        first_name:
+          type: string
+          example: "LeBron"
+        last_name:
+          type: string
+          example: "James"
+        is_active:
+          type: boolean
+          example: true
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          example: "$2b$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        is_admin:
+          type: boolean
+          example: false

@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getPlayersParMatch,
   getPlayerParMatch,
-} from "./players_par_match.controller";
+} from "./playersParMatch.controller";
 
 export const playerParMatchRouter = Router();
 

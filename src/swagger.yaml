@@ -610,6 +610,100 @@ paths:
                     type: string
                     example: "Internal server error"
 
+  /opponentsStatsParMatch:
+    get:
+      summary: Obtenez toutes les statistiques des adversaires par match
+      tags: [OpponentStats]
+      responses:
+        200:
+          description: Liste des statistiques des adversaires par match
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OpponentStatsParMatch"
+        404:
+          description: Aucune statistique d'adversaire trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching opponent stats"
+  /opponentStatsParMatch/{saison}/{abr}:
+    get:
+      summary: Obtenez les statistiques des adversaires par saison et équipe
+      tags: [OpponentStats]
+      parameters:
+        - in: path
+          name: saison
+          required: true
+          schema:
+            type: integer
+          description: Année de la saison
+        - in: path
+          name: abr
+          required: true
+          schema:
+            type: string
+          description: Abréviation de l'équipe
+      responses:
+        200:
+          description: Statistiques des adversaires trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/OpponentStatsParMatch"
+        400:
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        404:
+          description: Statistiques des adversaires non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching opponent stats"
+
   /teams:
     get:
       tags:

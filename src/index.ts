@@ -6,6 +6,7 @@ import { playerParMatchRouter } from "./players_par_match/players_par_match.rout
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import { advancedRouter } from "./advanced/advanced.router";
 
 export const app = express();
 const port = 1142;
@@ -22,6 +23,7 @@ app.use(userRouter);
 // app.use(teamsRouter);
 app.use(playerRouter);
 app.use(playerParMatchRouter);
+app.use(advancedRouter);
 
 export const server = app.listen(port);
 

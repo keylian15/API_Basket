@@ -15,19 +15,20 @@ model users {
 }
 
 model player_career_info {
-  id_joueur       Int    @id
-  nom_joueur      String @db.VarChar(100)
-  annee_naissance Int?
-  prem_saison     Int
-  dern_saison     Int
+  id_joueur        Int                @id
+  nom_joueur       String             @db.VarChar(100)
+  annee_naissance  Int?
+  prem_saison      Int
+  dern_saison      Int
+  player_par_match player_par_match[]
 }
 
 model player_par_match {
   saison             Int
   id_joueur          Int
-  nom_joueur         String @db.VarChar(100)
+  nom_joueur         String             @db.VarChar(100)
   annee_naissance    Int?
-  abr_equipe         String @db.VarChar(3)
+  abr_equipe         String             @db.VarChar(3)
   minutes_jouees     Float?
   pourcent_fg        Float?
   pourcent_trois_pts Float?
@@ -38,6 +39,7 @@ model player_par_match {
   interception       Int?
   contre             Int?
   points             Int?
+  player_career_info player_career_info @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_player_par_match_player_career_info")
 
   @@id([saison, id_joueur, abr_equipe])
 }

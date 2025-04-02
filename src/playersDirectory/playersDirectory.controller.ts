@@ -25,7 +25,7 @@ export const getPlayerDirectory = async (req: Request, res: Response) => {
     const playerDirectory = await prisma.player_directory.findFirst({
       where: {
         nom_joueur: nom_joueur,
-        date_naissance: dateNaissance,
+        date_naissance: dateNaissance + "T00:00:00.000Z",
       },
     });
 

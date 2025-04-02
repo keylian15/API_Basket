@@ -8,6 +8,7 @@ import { teamStatParMatch } from "./teamsStatParMatch/teamsStatParMatch.router";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import { playerDirectory } from "./playersDirectory/playersDirectory.router";
 
 export const app = express();
 const port = 1142;
@@ -21,11 +22,12 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 
 app.use(userRouter);
-app.use(teamRouter);
 app.use(playerRouter);
 app.use(playerParMatchRouter);
-app.use(advancedRouter);
+app.use(playerDirectory);
+app.use(teamRouter);
 app.use(teamStatParMatch);
+app.use(advancedRouter);
 
 export const server = app.listen(port);
 

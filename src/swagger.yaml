@@ -10,8 +10,6 @@ tags:
     description: Gestion des joueurs
   - name: Advanced
     description: Informations avancées des joueurs
-  - name: OpponentStats
-    description: Statistiques des adversaires
   - name: PlayerDirectory
     description: Annuaire des joueurs
   - name: PlayerParMatch
@@ -20,6 +18,8 @@ tags:
     description: Gestion des équipes
   - name: TeamStats
     description: Statistiques des équipes par match
+  - name: OpponentStats
+    description: Statistiques des adversaires
 
 paths:
   /users:
@@ -839,7 +839,6 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching user"
-
   /playerParMatch/{id_joueur}/{saison}/{abr_team}:
     get:
       summary: Obtenez les statistiques des joueurs par match par ID, saison et équipe

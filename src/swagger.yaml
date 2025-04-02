@@ -970,6 +970,96 @@ paths:
                     type: string
                     example: "Error while fetching team"
 
+  /teamsStatParMatch:
+    get:
+      summary: Obtenez toutes les statistiques des équipes par match
+      tags: [TeamStats]
+      responses:
+        200:
+          description: Liste des statistiques des équipes par match
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TeamStatParMatch"
+        404:
+          description: Aucune statistique d'équipe trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Stats not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching stats"
+  /teamStatParMatch/{saison}/{arb}/{qualif}:
+    get:
+      summary: Obtenez les statistiques d'une équipe par match en fonction de la saison, de l'équipe, de la ligue et de la qualification
+      tags: [TeamStats]
+      parameters:
+        - in: path
+          name: saison
+          required: true
+          schema:
+            type: integer
+          description: Année de la saison
+        - in: path
+          name: arb
+          required: true
+          schema:
+            type: string
+          description: Abréviation de l'équipe
+        - in: path
+          name: qualif
+          required: true
+          schema:
+            type: boolean
+          description: Statut de qualification
+      responses:
+        200:
+          description: Statistiques d'équipe trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/TeamStatParMatch"
+        404:
+          description: Statistiques d'équipe non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Stat not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching stats"
+
 components:
   schemas:
     Users:

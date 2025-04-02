@@ -1,7 +1,7 @@
-// import { Router } from "express";
-// import { getTeam, getTeams } from "./teams.controller";
+import { Router } from "express";
+import { getTeam, getTeams } from "./teams.controller";
 
-// export const teamsRouter = Router();
+export const teamsRouter = Router();
 
-// teamsRouter.get("/teams", getTeams);
-// teamsRouter.get("/team/:id", getTeam);
+teamsRouter.get("/teams", getTeams);
+teamsRouter.get("/team/:saison/:arb", getTeam);

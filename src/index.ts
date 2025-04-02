@@ -1,5 +1,5 @@
 import express from "express";
-// import { teamsRouter } from "./teams/teams.router";
+import { teamsRouter } from "./teams/teams.router";
 import { playerRouter } from "./players/players.router";
 import { userRouter } from "./users/users.router";
 import { playerParMatchRouter } from "./players_par_match/players_par_match.router";
@@ -20,7 +20,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 
 app.use(userRouter);
-// app.use(teamsRouter);
+app.use(teamsRouter);
 app.use(playerRouter);
 app.use(playerParMatchRouter);
 app.use(advancedRouter);

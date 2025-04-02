@@ -1,3 +1,4 @@
+// Fichier utilisant la table users
 import { Request, Response } from "express";
 import prisma from "../client";
 import jwt from "jsonwebtoken";

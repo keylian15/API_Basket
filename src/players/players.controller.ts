@@ -1,3 +1,4 @@
+// Fichier utilisant la table player_career_info
 import { Request, Response } from "express";
 import prisma from "../client";
 
@@ -16,6 +17,11 @@ export const getPlayers = async (_req: Request, res: Response) => {
 
 export const getPlayer = async (req: Request, res: Response) => {
   const { id } = req.params;
+
+  if (!id) {
+    res.status(400).json({ error: "ID required" });
+    return;
+  }
 
   try {
     const player = await prisma.player_career_info.findUnique({
@@ -80,6 +86,11 @@ export const createPlayer = async (req: Request, res: Response) => {
 
 export const updatePlayer = async (req: Request, res: Response) => {
   const { id } = req.params;
+
+  if (!id) {
+    res.status(400).json({ error: "ID required" });
+    return;
+  }
   const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
   if (!nom_joueur) {
     res.status(400).json({ error: "Name required" });
@@ -132,6 +143,10 @@ export const updatePlayer = async (req: Request, res: Response) => {
 export const deletePlayer = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  if (!id) {
+    res.status(400).json({ error: "ID required" });
+    return;
+  }
   try {
     await prisma.player_career_info.delete({
       where: {

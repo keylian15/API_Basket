@@ -8,7 +8,7 @@ import YAML from "yamljs";
 import path from "path";
 
 export const app = express();
-const port = 3000;
+const port = 1142;
 
 // Charger la spécification Swagger
 const swaggerDocument = YAML.load(path.join(__dirname, "./swagger.yaml"));
@@ -24,6 +24,8 @@ app.use(playerRouter);
 app.use(playerParMatchRouter);
 
 export const server = app.listen(port);
+
+console.log(`Server is running on port ${port}`);
 
 export function stopServer() {
   server.close();

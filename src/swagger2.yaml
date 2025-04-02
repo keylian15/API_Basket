@@ -3,28 +3,12 @@ info:
   title: Basketball API
   version: 1.0.0
   description: API pour récupérer les informations de basketball ainsi que des prédictions.
-tags:
-  - name: Users
-    description: User management and authentication
-  - name: Players
-    description: Player management
-  - name: Advanced
-    description: Advanced player statistics
-  - name: OpponentStats
-    description: Opponent statistics per match
-  - name: PlayerDirectory
-    description: Player directory information
-  - name: PlayerParMatch
-    description: Player statistics per match
-  - name: Teams
-    description: Team management
-  - name: TeamStats
-    description: Team statistics per match
 
 paths:
   /users:
     get:
-      tags: [Users]
+      tags:
+        - Users
       summary: Récupère tous les utilisateurs
       responses:
         "200":
@@ -34,17 +18,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Users"
+                  $ref: "#/components/schemas/User"
         "404":
           description: Aucun utilisateur trouvé
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "No users found"
+                type: string
+                example: "No users found"
         "500":
           description: Erreur serveur
           content:
@@ -57,7 +38,8 @@ paths:
                     example: "Error while fetching users"
   /user:
     post:
-      tags: [Users]
+      tags:
+        - Users
       summary: Crée un nouvel utilisateur
       requestBody:
         required: true
@@ -81,30 +63,10 @@ paths:
         "201":
           description: Utilisateur créé avec succès
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "User created"
-        "400":
-          description: Requête invalide
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "User created"
-        "500":
-          description: Erreur serveur
-          content:
-            application/json:
-              schema:
-                type: object
-              
+                type: string
+                example: "User créé."
         "400":
           description: Requête invalide
           content:
@@ -140,7 +102,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Users"
+                $ref: "#/components/schemas/User"
         "404":
           description: Utilisateur non trouvé
           content:
@@ -316,33 +278,30 @@ paths:
 
   /players:
     get:
-      summary: Get all players
-      tags: [Players]
+      tags:
+        - Players
+      summary: Récupère tous les joueurs
       responses:
-        200:
-          description: List of players
+        "200":
+          description: Liste des joueurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Player"
+        "404":
+          description: Aucun joueur trouvé
+        "500":
+          description: Erreur serveur
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/PlayerCareerInfo"
-        404:
-          description: No players found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        500:
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
+                  error:
+                    type: string
+                    example: "Error while fetching players"
   /players/{id}:
     get:
       tags:
@@ -361,7 +320,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PlayerCareerInfo"
+                $ref: "#/components/schemas/Player"
         "404":
           description: Joueur non trouvé
           content:
@@ -443,9 +402,58 @@ paths:
                     type: string
                     example: "Error while fetching team"
 
+                 
+  
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
-    Users:
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        full_name:
+          type: string
+          example: "Los Angeles Lakers"
+        abbreviation:
+          type: string
+          example: "LAL"
+        nickname:
+          type: string
+          example: "Lakers"
+        city:
+          type: string
+          example: "Los Angeles"
+        state:
+          type: string
+          example: "California"
+        year_founded:
+          type: integer
+          example: 1947
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        full_name:
+          type: string
+          example: "LeBron James"
+        first_name:
+          type: string
+          example: "LeBron"
+        last_name:
+          type: string
+          example: "James"
+        is_active:
+          type: boolean
+          example: true
+    User:
       type: object
       properties:
         id:
@@ -453,202 +461,12 @@ components:
           example: 1
         email:
           type: string
+          format: email
           example: "user@example.com"
         password:
           type: string
-          example: "hashedpassword"
+          format: password
+          example: "$2b$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
         is_admin:
           type: boolean
           example: false
-
-    PlayerCareerInfo:
-      type: object
-      properties:
-        id_joueur:
-          type: integer
-          example: 2544
-        nom_joueur:
-          type: string
-          example: "LeBron James"
-        annee_naissance:
-          type: integer
-          example: 1984
-        prem_saison:
-          type: integer
-          example: 2003
-        dern_saison:
-          type: integer
-          example: 2024
-
-    PlayerParMatch:
-      type: object
-      properties:
-        saison:
-          type: integer
-          example: 2024
-        id_joueur:
-          type: integer
-          example: 2544
-        nom_joueur:
-          type: string
-          example: "LeBron James"
-        annee_naissance:
-          type: integer
-          example: 1984
-        abr_equipe:
-          type: string
-          example: "LAL"
-        minutes_jouees:
-          type: number
-          format: float
-          example: 35.4
-        pourcent_fg:
-          type: number
-          format: float
-          example: 50.3
-        pourcent_trois_pts:
-          type: number
-          format: float
-          example: 37.1
-        pourcent_ft:
-          type: number
-          format: float
-          example: 78.5
-        rebond:
-          type: integer
-          example: 8
-        passe:
-          type: integer
-          example: 7
-        interception:
-          type: integer
-          example: 1
-        contre:
-          type: integer
-          example: 1
-        points:
-          type: integer
-          example: 27
-
-    Advanced:
-      type: object
-      properties:
-        id_joueur:
-          type: integer
-          example: 2544
-        saison:
-          type: integer
-          example: 2024
-        nom_joueur:
-          type: string
-          example: "LeBron James"
-        abr_equipe:
-          type: string
-          example: "LAL"
-        sexe:
-          type: string
-          example: "M"
-        poste:
-          type: string
-          example: "SF"
-        per:
-          type: integer
-          example: 27
-        annee_naissance:
-          type: integer
-          example: 1984
-
-    OpponentStatsParMatch:
-      type: object
-      properties:
-        abr_equipe:
-          type: string
-          example: "LAL"
-        saison:
-          type: integer
-          example: 2024
-        team_name:
-          type: string
-          example: "Los Angeles Lakers"
-        qualif:
-          type: boolean
-          example: true
-        partie_jouee:
-          type: integer
-          example: 82
-        opp_pts_par_match:
-          type: number
-          format: float
-          example: 110.3
-
-    PlayerDirectory:
-      type: object
-      properties:
-        nom_joueur:
-          type: string
-          example: "LeBron James"
-        date_naissance:
-          type: string
-          format: date
-          example: "1984-12-30"
-        taille:
-          type: integer
-          example: 206
-        poids:
-          type: integer
-          example: 113
-
-    Team:
-      type: object
-      properties:
-        abr_equipe:
-          type: string
-          example: "LAL"
-        saison:
-          type: integer
-          example: 2024
-        team_name:
-          type: string
-          example: "Los Angeles Lakers"
-
-    TeamStatParMatch:
-      type: object
-      properties:
-        saison:
-          type: integer
-          example: 2024
-        abr_equipe:
-          type: string
-          example: "LAL"
-        lg:
-          type: string
-          example: "NBA"
-        qualif:
-          type: boolean
-          example: true
-        partie_jouee:
-          type: integer
-          example: 82
-        fg_par_match:
-          type: number
-          format: float
-          example: 40.5
-        fga_par_match:
-          type: number
-          format: float
-          example: 90.2
-        fg_pourcent:
-          type: number
-          format: float
-          example: 45.0
-        pts_par_match:
-          type: number
-          format: float
-          example: 112.3
-
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          example: "Une erreur est survenue"

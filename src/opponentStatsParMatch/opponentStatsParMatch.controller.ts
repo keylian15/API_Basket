@@ -22,12 +22,12 @@ export const getOpponentsStatsParMatch = async (
 };
 
 export const getOpponentStatsParMatch = async (req: Request, res: Response) => {
-  const { saison, abr } = req.params;
-  if (!saison || !abr) {
-    res.status(400).json({ error: "Missing parameters" });
-    return;
-  }
   try {
+    const { saison, abr } = req.params;
+    if (!saison || !abr) {
+      res.status(400).json({ error: "Missing parameters" });
+      return;
+    }
     const playerDirectory = await prisma.opponent_stats_par_match.findFirst({
       where: {
         saison: Number(saison),

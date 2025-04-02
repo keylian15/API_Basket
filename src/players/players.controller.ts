@@ -16,14 +16,13 @@ export const getPlayers = async (_req: Request, res: Response) => {
 };
 
 export const getPlayer = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  if (!id) {
-    res.status(400).json({ error: "ID required" });
-    return;
-  }
-
   try {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).json({ error: "ID required" });
+      return;
+    }
     const player = await prisma.player_career_info.findUnique({
       where: {
         id_joueur: Number(id),
@@ -41,34 +40,36 @@ export const getPlayer = async (req: Request, res: Response) => {
 };
 
 export const createPlayer = async (req: Request, res: Response) => {
-  const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
-  if (!nom_joueur) {
-    res.status(400).json({ error: "Name required" });
-    return;
-  }
-  if (annee_naissance) {
-    if (annee_naissance < 1900) {
-      res
-        .status(400)
-        .json({ error: "Annee_naissance must be greater than 1900" });
+  try {
+    const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
+    if (!nom_joueur) {
+      res.status(400).json({ error: "Name required" });
       return;
     }
-  }
-  if (!prem_saison) {
-    res.status(400).json({ error: "Premier saison required" });
-    return;
-  } else if (prem_saison < 1946) {
-    res.status(400).json({ error: "Premier saison must be greater than 1946" });
-    return;
-  }
-  if (!dern_saison) {
-    res.status(400).json({ error: "Dernier saison required" });
-    return;
-  } else if (dern_saison > 2023 || dern_saison > prem_saison) {
-    res.status(400).json({ error: "Dernier is invalid" });
-    return;
-  }
-  try {
+    if (annee_naissance) {
+      if (annee_naissance < 1900) {
+        res
+          .status(400)
+          .json({ error: "Annee_naissance must be greater than 1900" });
+        return;
+      }
+    }
+    if (!prem_saison) {
+      res.status(400).json({ error: "Premier saison required" });
+      return;
+    } else if (prem_saison < 1946) {
+      res
+        .status(400)
+        .json({ error: "Premier saison must be greater than 1946" });
+      return;
+    }
+    if (!dern_saison) {
+      res.status(400).json({ error: "Dernier saison required" });
+      return;
+    } else if (dern_saison > 2023 || dern_saison > prem_saison) {
+      res.status(400).json({ error: "Dernier is invalid" });
+      return;
+    }
     await prisma.player_career_info.create({
       data: {
         id_joueur: 100000, // auto-incremented by the trigger
@@ -85,44 +86,44 @@ export const createPlayer = async (req: Request, res: Response) => {
 };
 
 export const updatePlayer = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  if (!id) {
-    res.status(400).json({ error: "ID required" });
-    return;
-  }
-  const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
-  if (!nom_joueur) {
-    res.status(400).json({ error: "Name required" });
-    return;
-  }
-  if (annee_naissance) {
-    if (annee_naissance < 1900) {
-      res
-        .status(400)
-        .json({ error: "Annee_naissance must be greater than 1900" });
+    if (!id) {
+      res.status(400).json({ error: "ID required" });
       return;
     }
-  }
-  if (!prem_saison) {
-    res.status(400).json({ error: "Premier season required" });
-    return;
-  } else if (prem_saison < 1946 || prem_saison > dern_saison) {
-    res
-      .status(400)
-      .json({ error: "Premier saison is invalid (gratter than 1946)" });
-    return;
-  }
-  if (!dern_saison) {
-    res.status(400).json({ error: "Dernier season required" });
-    return;
-  } else if (dern_saison > 2025 || dern_saison < prem_saison) {
-    res
-      .status(400)
-      .json({ error: "Dernier season is invalid (lower than 2025)" });
-    return;
-  }
-  try {
+    const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
+    if (!nom_joueur) {
+      res.status(400).json({ error: "Name required" });
+      return;
+    }
+    if (annee_naissance) {
+      if (annee_naissance < 1900) {
+        res
+          .status(400)
+          .json({ error: "Annee_naissance must be greater than 1900" });
+        return;
+      }
+    }
+    if (!prem_saison) {
+      res.status(400).json({ error: "Premier season required" });
+      return;
+    } else if (prem_saison < 1946 || prem_saison > dern_saison) {
+      res
+        .status(400)
+        .json({ error: "Premier saison is invalid (gratter than 1946)" });
+      return;
+    }
+    if (!dern_saison) {
+      res.status(400).json({ error: "Dernier season required" });
+      return;
+    } else if (dern_saison > 2025 || dern_saison < prem_saison) {
+      res
+        .status(400)
+        .json({ error: "Dernier season is invalid (lower than 2025)" });
+      return;
+    }
     await prisma.player_career_info.update({
       where: {
         id_joueur: Number(id),
@@ -141,13 +142,13 @@ export const updatePlayer = async (req: Request, res: Response) => {
 };
 
 export const deletePlayer = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  if (!id) {
-    res.status(400).json({ error: "ID required" });
-    return;
-  }
   try {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).json({ error: "ID required" });
+      return;
+    }
     await prisma.player_career_info.delete({
       where: {
         id_joueur: Number(id),

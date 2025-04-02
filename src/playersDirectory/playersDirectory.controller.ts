@@ -16,12 +16,12 @@ export const getPlayersDirectory = async (_req: Request, res: Response) => {
 };
 
 export const getPlayerDirectory = async (req: Request, res: Response) => {
-  const { nom_joueur, dateNaissance } = req.params;
-  if (!nom_joueur || !dateNaissance) {
-    res.status(400).json({ error: "Missing parameters" });
-    return;
-  }
   try {
+    const { nom_joueur, dateNaissance } = req.params;
+    if (!nom_joueur || !dateNaissance) {
+      res.status(400).json({ error: "Missing parameters" });
+      return;
+    }
     const playerDirectory = await prisma.player_directory.findFirst({
       where: {
         nom_joueur: nom_joueur,

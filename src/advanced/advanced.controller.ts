@@ -30,7 +30,7 @@ export const getAdvanced = async (req: Request, res: Response) => {
     });
 
     if (!advanced) {
-      res.status(404).json({ error: "Players's advanced info not found" });
+      res.status(404).json({ error: "Player's advanced info not found" });
       return;
     }
     res.status(200).json({ data: advanced });

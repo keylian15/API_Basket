@@ -522,6 +522,94 @@ paths:
                 type: object
                 example: "Player not found"
 
+  /advanceds:
+    get:
+      summary: Obtenez toutes les statistiques avancées des joueurs
+      tags: [Advanced]
+      responses:
+        200:
+          description: Liste des statistiques avancées des joueurs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Advanced"
+        404:
+          description: Aucune statistique avancée trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching advanced stats"
+  /advanced/{id}:
+    get:
+      summary: Obtenez des statistiques avancées sur un joueur par ID
+      tags: [Advanced]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Identifiant du joueur
+      responses:
+        200:
+          description: Statistiques avancées trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Advanced"
+        400:
+          description: ID manquant
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing ID"
+        404:
+          description: Statistiques avancées non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player's advanced info not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+
   /teams:
     get:
       tags:

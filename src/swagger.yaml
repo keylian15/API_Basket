@@ -1145,7 +1145,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching stats"
-  /TeamStatsParMatch/{saison}/{arb_team}/{qualif}:
+  /teamStatsParMatch/{saison}/{arb_team}/{qualif}:
     get:
       summary: Obtenez les statistiques d'une équipe par match en fonction de la saison, de l'équipe, de la ligue et de la qualification
       tags: [TeamStats]

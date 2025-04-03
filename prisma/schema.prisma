@@ -7,6 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// De la BDD : 
+model advanced {
+  id_joueur       Int
+  saison          Int
+  nom_joueur      String @db.VarChar(100)
+  abr_equipe      String @db.VarChar(3)
+  poste           String @db.VarChar(100)
+  per             Int?
+  annee_naissance Int?
+
+  @@id([id_joueur, saison, abr_equipe])
+}
+
+model match {
+  game_id                Int       @id
+  game_date_est          DateTime? @db.Date
+  team_abbreviation_home String    @db.VarChar(3)
+  pts_home               Int
+  team_abbreviation_away String    @db.VarChar(3)
+  pts_away               Int
+}
+
 model users {
   id       Int      @id @default(autoincrement())
   password String
@@ -43,18 +65,6 @@ model player_par_match {
   player_career_info player_career_info @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_player_par_match_player_career_info")
 
   @@id([saison, id_joueur, abr_equipe])
-}
-
-model advanced {
-  id_joueur       Int
-  saison          Int
-  nom_joueur      String @db.VarChar(100)
-  abr_equipe      String @db.VarChar(3)
-  poste           String @db.VarChar(100)
-  per             Int?
-  annee_naissance Int?
-
-  @@id([id_joueur, saison, abr_equipe])
 }
 
 model opponent_stats_par_match {
@@ -111,15 +121,6 @@ model team {
   team_stats_par_match     team_stats_par_match[]
 
   @@id([abr_equipe, saison])
-}
-
-model match {
-  game_id                Int       @id
-  game_date_est          DateTime? @db.Date
-  team_abbreviation_home String    @db.VarChar(3)
-  pts_home               Int
-  team_abbreviation_away String    @db.VarChar(3)
-  pts_away               Int
 }
 
 model aba {

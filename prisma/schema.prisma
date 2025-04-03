@@ -184,12 +184,3 @@ model team_stats_par_match {
 
   @@id([saison, abr_equipe, qualif])
 }
-
-model match {
-  game_id                Int       @id
-  game_date_est          DateTime? @db.Date
-  team_abbreviation_home String    @db.VarChar(3)
-  pts_home               Int
-  team_abbreviation_away String    @db.VarChar(3)
-  pts_away               Int
-}

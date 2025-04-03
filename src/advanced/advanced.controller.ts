@@ -18,8 +18,8 @@ export const getAdvanceds = async (_req: Request, res: Response) => {
 export const getAdvanced = async (req: Request, res: Response) => {
   try {
     const { id, saison, abr } = req.params;
-    if (!id) {
-      res.status(400).json({ error: "Missing id" });
+    if (!id || !saison || !abr) {
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const advanced = await prisma.advanced.findFirst({
@@ -121,16 +121,8 @@ export const updateAdvanced = async (req: Request, res: Response) => {
   try {
     // Verification des parametres
     const { id, saison_param, abr } = req.params;
-    if (!id) {
-      res.status(400).json({ error: "Missing id" });
-      return;
-    }
-    if (!saison_param) {
-      res.status(400).json({ error: "Missing saison" });
-      return;
-    }
-    if (!abr) {
-      res.status(400).json({ error: "Missing abr" });
+    if (!id || !saison_param || !abr) {
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
 
@@ -214,16 +206,8 @@ export const deleteAdvanced = async (req: Request, res: Response) => {
   try {
     // Verification des parametres
     const { id, saison, abr } = req.params;
-    if (!id) {
-      res.status(400).json({ error: "Missing id" });
-      return;
-    }
-    if (!saison) {
-      res.status(400).json({ error: "Missing saison" });
-      return;
-    }
-    if (!abr) {
-      res.status(400).json({ error: "Missing abr" });
+    if (!id || !saison || !abr) {
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     // Verification existance

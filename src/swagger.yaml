@@ -945,10 +945,50 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching teams"
+  /team:
+    post:
+      tags: [Teams]
+      summary: Crée une nouvelle équipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Team"
+      responses:
+        "201":
+          description: Équipe créée avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Team created"
+        "400":
+          description: Données invalides
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid data"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating team"
   /teams/{id}:
     get:
-      tags:
-        - Teams
+      tags: [Teams]
       summary: Récupère une équipe par son ID
       parameters:
         - name: id
@@ -981,7 +1021,94 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching team"
-
+    patch:
+      tags: [Teams]
+      summary: Met à jour une équipe par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID de l'équipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Team"
+      responses:
+        "200":
+          description: Équipe mise à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Team updated successfully"
+        "404":
+          description: Équipe non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Team not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while updating team"
+    delete:
+      tags: [Teams]
+      summary: Supprime une équipe par son ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID de l'équipe
+      responses:
+        "200":
+          description: Équipe supprimée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Team deleted"
+        "404":
+          description: Équipe non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Team not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting team"
   /teamsStatParMatch:
     get:
       summary: Obtenez toutes les statistiques des équipes par match

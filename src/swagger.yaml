@@ -663,7 +663,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching opponent stats"
-  /opponentStatsParMatch/{saison}/{abr}:
+  /opponentStatsParMatch/{saison}/{abr}/{qualif}:
     get:
       summary: Obtenez les statistiques des adversaires par saison et équipe
       tags: [OpponentStats]
@@ -680,6 +680,12 @@ paths:
           schema:
             type: string
           description: Abréviation de l'équipe
+        - in: path
+          name: qualif
+          required: true
+          schema:
+            type: boolean
+            example: true
       responses:
         200:
           description: Statistiques des adversaires trouvées

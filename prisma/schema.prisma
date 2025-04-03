@@ -29,6 +29,41 @@ model match {
   pts_away               Int
 }
 
+model opponent_stats_par_match {
+  saison             Int
+  abr_equipe         String  @db.VarChar(3)
+  lg                 String? @db.VarChar(3)
+  team_name          String? @db.VarChar(100)
+  qualif             Boolean
+  partie_jouee       Int?
+  minute_par_match   Float?
+  opp_fg_par_match   Float?
+  opp_fga_par_match  Float?
+  opp_fg_pourcent    Float?
+  opp_x3p_par_match  Float?
+  opp_x3pa_par_match Float?
+  opp_x3p_pourcent   Float?
+  opp_x2p_par_match  Float?
+  opp_x2pa_par_match Float?
+  opp_x2p_pourcent   Float?
+  opp_ft_par_match   Float?
+  opp_fta_par_match  Float?
+  opp_ft_pourcent    Float?
+  opp_orb_par_match  Float?
+  opp_drb_par_match  Float?
+  opp_trb_par_match  Float?
+  opp_ast_par_match  Float?
+  opp_stl_par_match  Float?
+  opp_blk_par_match  Float?
+  opp_tov_par_match  Float?
+  opp_pf_par_match   Float?
+  opp_pts_par_match  Float?
+  opp_possession     Float?
+  team               team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison, qualif])
+}
+
 model users {
   id       Int      @id @default(autoincrement())
   password String
@@ -65,41 +100,6 @@ model player_par_match {
   player_career_info player_career_info @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_player_par_match_player_career_info")
 
   @@id([saison, id_joueur, abr_equipe])
-}
-
-model opponent_stats_par_match {
-  saison             Int
-  abr_equipe         String  @db.VarChar(3)
-  lg                 String? @db.VarChar(3)
-  team_name          String? @db.VarChar(100)
-  qualif             Boolean
-  partie_jouee       Int?
-  minute_par_match   Float?
-  opp_fg_par_match   Float?
-  opp_fga_par_match  Float?
-  opp_fg_pourcent    Float?
-  opp_x3p_par_match  Float?
-  opp_x3pa_par_match Float?
-  opp_x3p_pourcent   Float?
-  opp_x2p_par_match  Float?
-  opp_x2pa_par_match Float?
-  opp_x2p_pourcent   Float?
-  opp_ft_par_match   Float?
-  opp_fta_par_match  Float?
-  opp_ft_pourcent    Float?
-  opp_orb_par_match  Float?
-  opp_drb_par_match  Float?
-  opp_trb_par_match  Float?
-  opp_ast_par_match  Float?
-  opp_stl_par_match  Float?
-  opp_blk_par_match  Float?
-  opp_tov_par_match  Float?
-  opp_pf_par_match   Float?
-  opp_pts_par_match  Float?
-  opp_possession     Float?
-  team               team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([abr_equipe, saison, qualif])
 }
 
 model player_directory {

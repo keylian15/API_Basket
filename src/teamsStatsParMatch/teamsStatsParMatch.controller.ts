@@ -22,16 +22,11 @@ export const getTeamStatsParMatch = async (req: Request, res: Response) => {
       res.status(400).json({ error: "Missing parameters" });
       return;
     }
-    var qualifBoolean = true;
-    if (qualif == "false") {
-      qualifBoolean = false;
-    }
-
     const team = await prisma.team_stats_par_match.findFirst({
       where: {
         abr_equipe: abr.toUpperCase(),
         saison: Number(saison),
-        qualif: qualifBoolean,
+        qualif: qualif === "true",
       },
     });
 

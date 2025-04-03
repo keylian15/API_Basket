@@ -95,7 +95,7 @@ export const createMatch = async (req: Request, res: Response) => {
     const match = await prisma.match.create({
       data: {
         game_id,
-        game_date_est,
+        game_date_est: game_date_est + "T00:00:00.000Z",
         team_abbreviation_home,
         pts_home,
         team_abbreviation_away,

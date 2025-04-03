@@ -55,32 +55,32 @@ export const createAdvanced = async (req: Request, res: Response) => {
 
     if (id_joueur) {
       if (id_joueur <= 0) {
-        res.status(400).json({ error: "id_joueur must be a positive integer" });
+        res.status(400).json({ error: "Id_joueur must be a positive integer" });
         return;
       }
     } else {
-      res.status(400).json({ error: "Missing id_joueur" });
+      res.status(400).json({ error: "Id_joueur required" });
       return;
     }
     if (saison) {
       if (saison <= 1946) {
-        res.status(400).json({ error: "saison must be greater than 1946" });
+        res.status(400).json({ error: "Saison must be greater than 1946" });
         return;
       }
     } else {
-      res.status(400).json({ error: "Missing saison" });
+      res.status(400).json({ error: "Saison required" });
       return;
     }
     if (!nom_joueur) {
-      res.status(400).json({ error: "Missing nom_joueur" });
+      res.status(400).json({ error: "Nom_joueur required" });
       return;
     }
     if (!abr_equipe) {
-      res.status(400).json({ error: "Missing abr_equipe" });
+      res.status(400).json({ error: "Abr_equipe required" });
       return;
     }
     if (!poste) {
-      res.status(400).json({ error: "Missing poste" });
+      res.status(400).json({ error: "Poste required" });
       return;
     }
 
@@ -137,23 +137,23 @@ export const updateAdvanced = async (req: Request, res: Response) => {
       annee_naissance,
     } = req.body;
     if (!id_joueur) {
-      res.status(400).json({ error: "Missing id_joueur" });
+      res.status(400).json({ error: "Id_joueur required" });
       return;
     }
     if (!saison) {
-      res.status(400).json({ error: "Missing saison" });
+      res.status(400).json({ error: "Saison required" });
       return;
     }
     if (!nom_joueur) {
-      res.status(400).json({ error: "Missing nom_joueur" });
+      res.status(400).json({ error: "Nom_joueur required" });
       return;
     }
     if (!abr_equipe) {
-      res.status(400).json({ error: "Missing abr_equipe" });
+      res.status(400).json({ error: "Abr_equipe required" });
       return;
     }
     if (!poste) {
-      res.status(400).json({ error: "Missing poste" });
+      res.status(400).json({ error: "Poste required" });
       return;
     }
 

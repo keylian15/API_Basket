@@ -93,7 +93,12 @@ export const updatePlayer = async (req: Request, res: Response) => {
       res.status(400).json({ error: "ID required" });
       return;
     }
-    const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
+    const { id_joueur, nom_joueur, annee_naissance, prem_saison, dern_saison } =
+      req.body;
+    if (!id_joueur) {
+      res.status(400).json({ error: "ID joueur required" });
+      return;
+    }
     if (!nom_joueur) {
       res.status(400).json({ error: "Name required" });
       return;
@@ -129,6 +134,7 @@ export const updatePlayer = async (req: Request, res: Response) => {
         id_joueur: Number(id),
       },
       data: {
+        id_joueur: Number(id_joueur),
         nom_joueur,
         annee_naissance,
         prem_saison,

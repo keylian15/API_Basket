@@ -89,16 +89,15 @@ export const createOpponentStatsParMatch = async (
 
     // Verification des données
     if (!saison) {
-      res.status(400).json({ error: "Missing saison" });
+      res.status(400).json({ error: "Saison required" });
       return;
     }
     if (!abr_equipe) {
-      res.status(400).json({ error: "Missing abr_equipe" });
+      res.status(400).json({ error: "Abr_equipe required" });
       return;
     }
-
     if (qualif.length === 0) {
-      res.status(400).json({ error: "Missing qualif" });
+      res.status(400).json({ error: "Qualif required" });
       return;
     }
 
@@ -237,15 +236,15 @@ export const updateOpponentStatsParMatch = async (
 
     // Verification des données
     if (!saison) {
-      res.status(400).json({ error: "Missing saison" });
+      res.status(400).json({ error: "Saison required" });
       return;
     }
     if (!abr_equipe) {
-      res.status(400).json({ error: "Missing abr_equipe" });
+      res.status(400).json({ error: "Abr_equipe required" });
       return;
     }
     if (qualif.length === 0) {
-      res.status(400).json({ error: "Missing qualif" });
+      res.status(400).json({ error: "Qualif required" });
       return;
     }
 

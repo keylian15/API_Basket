@@ -7,7 +7,7 @@ import {
   login,
   updateUser,
 } from "./users.controller";
-import { verifyJWT } from "../commun/commun.midleware";
+import { verifyJWT } from "../commun/commun.middleware ";
 
 export const userRouter = Router();
 

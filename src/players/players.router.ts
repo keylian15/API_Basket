@@ -6,7 +6,7 @@ import {
   updatePlayer,
   deletePlayer,
 } from "./players.controller";
-import { verifyJWT } from "../commun/commun.midleware";
+import { verifyJWT } from "../commun/commun.middleware ";
 
 export const playerRouter = Router();
 

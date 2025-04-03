@@ -1266,6 +1266,10 @@ components:
           type: number
           format: float
           example: 37.1
+        pourcent_efg:
+          type: number
+          format: float
+          example: 54.2
         pourcent_ft:
           type: number
           format: float
@@ -1397,6 +1401,18 @@ components:
           type: number
           format: float
           example: 45.0
+        x3p_par_match:
+          type: number
+          format: float
+          example: 12.5
+        x3pa_par_match:
+          type: number
+          format: float
+          example: 35.0
+        x3p_pourcent:
+          type: number
+          format: float
+          example: 35.7
         pts_par_match:
           type: number
           format: float

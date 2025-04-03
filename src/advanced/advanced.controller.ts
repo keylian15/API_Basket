@@ -17,14 +17,16 @@ export const getAdvanceds = async (_req: Request, res: Response) => {
 
 export const getAdvanced = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id, saison, abr } = req.params;
     if (!id) {
       res.status(400).json({ error: "Missing id" });
       return;
     }
-    const advanced = await prisma.advanced.findUnique({
+    const advanced = await prisma.advanced.findFirst({
       where: {
         id_joueur: Number(id),
+        saison: Number(saison),
+        abr_equipe: abr.toUpperCase(),
       },
     });
 

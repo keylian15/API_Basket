@@ -562,7 +562,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching advanced stats"
-  /advanced/{id}:
+  /advanced/{id}/{saison}/{abr_equipe}:
     get:
       summary: Obtenez des statistiques avancées sur un joueur par ID
       tags: [Advanced]
@@ -573,6 +573,18 @@ paths:
           schema:
             type: integer
           description: Identifiant du joueur
+        - in: path
+          name: saison
+          required: true
+          schema:
+            type: integer
+          description: Année de la saison
+        - in: path
+          name: abr_equipe
+          required: true
+          schema:
+            type: string
+          description: Abréviation de l'équipe
       responses:
         200:
           description: Statistiques avancées trouvées
@@ -592,7 +604,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Missing ID"
+                    example: "Missing parameters"
         404:
           description: Statistiques avancées non trouvées
           content:
@@ -1006,7 +1018,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching stats"
-  /teamStatParMatch/{saison}/{arb}/{qualif}:
+  /teamStatParMatch/{saison}/{arb_team}/{qualif}:
     get:
       summary: Obtenez les statistiques d'une équipe par match en fonction de la saison, de l'équipe, de la ligue et de la qualification
       tags: [TeamStats]

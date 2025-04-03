@@ -114,7 +114,7 @@ export const updateMatch = async (req: Request, res: Response) => {
     const id = req.params.gameId;
 
     if (!id) {
-      res.status(400).json({ error: "Missing id" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
 
@@ -216,7 +216,7 @@ export const deleteMatch = async (req: Request, res: Response) => {
     const id = req.params.gameId;
 
     if (!id) {
-      res.status(400).json({ error: "Missing id" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
 

@@ -10,6 +10,7 @@ import YAML from "yamljs";
 import path from "path";
 import { playerDirectory } from "./playersDirectory/playersDirectory.router";
 import { opponentStatsParMatch } from "./opponentStatsParMatch/opponentStatsParMatch.router";
+import { matchRouter } from "./matchs/matchs.router";
 
 export const app = express();
 const port = 11042;
@@ -30,6 +31,7 @@ app.use(teamRouter);
 app.use(teamStatsParMatch);
 app.use(advancedRouter);
 app.use(opponentStatsParMatch);
+app.use(matchRouter);
 
 export const server = app.listen(port);
 

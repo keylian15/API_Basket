@@ -57,11 +57,11 @@ model advanced {
 }
 
 model opponent_stats_par_match {
-  abr_equipe         String   @db.VarChar(3)
+  abr_equipe         String  @db.VarChar(3)
   saison             Int
-  lg                 String?  @db.VarChar(3)
-  team_name          String?  @db.VarChar(100)
-  qualif             Boolean?
+  lg                 String? @db.VarChar(3)
+  team_name          String? @db.VarChar(100)
+  qualif             Boolean
   partie_jouee       Int?
   minute_par_match   Float?
   opp_fg_par_match   Float?
@@ -84,9 +84,9 @@ model opponent_stats_par_match {
   opp_blk_par_match  Float?
   opp_pf_par_match   Float?
   opp_pts_par_match  Float?
-  team               team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+  team               team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([abr_equipe, saison])
+  @@id([abr_equipe, saison, qualif])
 }
 
 model player_directory {
@@ -99,10 +99,12 @@ model player_directory {
 }
 
 model team {
-  abr_equipe               String                    @db.VarChar(3)
+  abr_equipe               String                     @db.VarChar(3)
   saison                   Int
-  team_name                String                    @db.VarChar(100)
-  opponent_stats_par_match opponent_stats_par_match?
+  team_name                String                     @db.VarChar(100)
+  aba                      aba?
+  nba                      nba?
+  opponent_stats_par_match opponent_stats_par_match[]
   team_stat_par_match      team_stat_par_match[]
 
   @@id([abr_equipe, saison])
@@ -148,4 +150,22 @@ model match {
   pts_home               Int
   team_abbreviation_away String    @db.VarChar(3)
   pts_away               Int
+}
+
+model aba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
+}
+
+model nba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
 }

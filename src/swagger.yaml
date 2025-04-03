@@ -38,7 +38,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Users"
+                  $ref: "#/components/schemas/User"
         "404":
           description: Aucun utilisateur trouvé
           content:
@@ -129,7 +129,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Users"
+                $ref: "#/components/schemas/User"
         "404":
           description: Utilisateur non trouvé
           content:
@@ -1201,219 +1201,571 @@ paths:
 
 components:
   schemas:
-    Users:
+    User:
       type: object
       properties:
         id:
           type: integer
-          example: 1
-        email:
-          type: string
-          example: "user@example.com"
+          format: int32
+          description: Identifiant unique de l'utilisateur
         password:
           type: string
-          example: "hashedpassword"
+          description: Mot de passe de l'utilisateur
+        email:
+          type: string
+          format: email
+          description: Email unique de l'utilisateur
         is_admin:
           type: boolean
-          example: false
+          description: Indique si l'utilisateur est administrateur
+          default: false
+      required:
+        - id
+        - password
+        - email
 
     PlayerCareerInfo:
       type: object
       properties:
         id_joueur:
           type: integer
-          example: 2544
+          format: int32
+          description: Identifiant unique du joueur
         nom_joueur:
           type: string
-          example: "LeBron James"
+          maxLength: 100
+          description: Nom du joueur
         annee_naissance:
           type: integer
-          example: 1984
+          format: int32
+          nullable: true
+          description: Année de naissance du joueur
         prem_saison:
           type: integer
-          example: 2003
+          format: int32
+          description: Première saison du joueur
         dern_saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Dernière saison du joueur
+      required:
+        - id_joueur
+        - nom_joueur
+        - prem_saison
+        - dern_saison
 
     PlayerParMatch:
       type: object
       properties:
         saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Saison du match
         id_joueur:
           type: integer
-          example: 2544
+          format: int32
+          description: Identifiant unique du joueur
         nom_joueur:
           type: string
-          example: "LeBron James"
+          maxLength: 100
+          description: Nom du joueur
         annee_naissance:
           type: integer
-          example: 1984
+          format: int32
+          nullable: true
+          description: Année de naissance du joueur
         abr_equipe:
           type: string
-          example: "LAL"
+          maxLength: 3
+          description: Abréviation de l'équipe
         minutes_jouees:
           type: number
           format: float
-          example: 35.4
+          nullable: true
+          description: Minutes jouées dans le match
         pourcent_fg:
           type: number
           format: float
-          example: 50.3
+          nullable: true
+          description: Pourcentage de field goals
         pourcent_trois_pts:
           type: number
           format: float
-          example: 37.1
+          nullable: true
+          description: Pourcentage de tirs à trois points
         pourcent_efg:
           type: number
           format: float
-          example: 54.2
+          nullable: true
+          description: Pourcentage de effective field goal
         pourcent_ft:
           type: number
           format: float
-          example: 78.5
+          nullable: true
+          description: Pourcentage de lancers francs
         rebond:
           type: integer
-          example: 8
+          format: int32
+          nullable: true
+          description: Nombre de rebonds
         passe:
           type: integer
-          example: 7
+          format: int32
+          nullable: true
+          description: Nombre de passes décisives
         interception:
           type: integer
-          example: 1
+          format: int32
+          nullable: true
+          description: Nombre d'interceptions
         contre:
           type: integer
-          example: 1
+          format: int32
+          nullable: true
+          description: Nombre de contres
         points:
           type: integer
-          example: 27
+          format: int32
+          nullable: true
+          description: Points marqués
+      required:
+        - saison
+        - id_joueur
+        - nom_joueur
+        - abr_equipe
 
     Advanced:
       type: object
       properties:
         id_joueur:
           type: integer
-          example: 2544
+          format: int32
+          description: Identifiant unique du joueur
         saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Saison
         nom_joueur:
           type: string
-          example: "LeBron James"
+          maxLength: 100
+          description: Nom du joueur
         abr_equipe:
           type: string
-          example: "LAL"
-        sexe:
-          type: string
-          example: "M"
+          maxLength: 3
+          description: Abréviation de l'équipe
         poste:
           type: string
-          example: "SF"
+          maxLength: 100
+          description: Poste du joueur
         per:
           type: integer
-          example: 27
+          format: int32
+          nullable: true
+          description: Player Efficiency Rating
         annee_naissance:
           type: integer
-          example: 1984
+          format: int32
+          nullable: true
+          description: Année de naissance du joueur
+      required:
+        - id_joueur
+        - saison
+        - nom_joueur
+        - abr_equipe
+        - poste
 
     OpponentStatsParMatch:
       type: object
       properties:
         abr_equipe:
           type: string
-          example: "LAL"
+          maxLength: 3
+          description: Abréviation de l'équipe
         saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Saison
+        lg:
+          type: string
+          maxLength: 3
+          nullable: true
+          description: Ligue
         team_name:
           type: string
-          example: "Los Angeles Lakers"
+          maxLength: 100
+          nullable: true
+          description: Nom de l'équipe
         qualif:
           type: boolean
-          example: true
+          description: Indicateur de qualification
         partie_jouee:
           type: integer
-          example: 82
+          format: int32
+          nullable: true
+          description: Nombre de parties jouées
+        minute_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Minutes jouées par match
+        opp_fg_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Field goals de l'adversaire par match
+        opp_fga_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de field goals adverses par match
+        opp_fg_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de field goals adverses
+        opp_x3p_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Trois points adverses par match
+        opp_x3pa_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de trois points adverses par match
+        opp_x3p_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de trois points adverses
+        opp_x2p_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Deux points adverses par match
+        opp_x2pa_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de deux points adverses par match
+        opp_x2p_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de deux points adverses
+        opp_ft_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Lancers francs adverses par match
+        opp_fta_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de lancers francs adverses par match
+        opp_ft_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de lancers francs adverses
+        opp_orb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Rebonds offensifs adverses par match
+        opp_drb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Rebonds défensifs adverses par match
+        opp_trb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Total des rebonds adverses par match
+        opp_ast_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Passes décisives adverses par match
+        opp_stl_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Interceptions adverses par match
+        opp_blk_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Contres adverses par match
+        opp_pf_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Fautes personnelles adverses par match
         opp_pts_par_match:
           type: number
           format: float
-          example: 110.3
+          nullable: true
+          description: Points adverses par match
+      required:
+        - abr_equipe
+        - saison
+        - qualif
 
     PlayerDirectory:
       type: object
       properties:
         nom_joueur:
           type: string
-          example: "LeBron James"
+          maxLength: 100
+          description: Nom du joueur
         date_naissance:
           type: string
           format: date
-          example: "1984-12-30"
+          description: Date de naissance du joueur
         taille:
           type: integer
-          example: 206
+          format: int32
+          nullable: true
+          description: Taille du joueur
         poids:
           type: integer
-          example: 113
+          format: int32
+          nullable: true
+          description: Poids du joueur
+      required:
+        - nom_joueur
+        - date_naissance
 
     Team:
       type: object
       properties:
         abr_equipe:
           type: string
-          example: "LAL"
+          maxLength: 3
+          description: Abréviation de l'équipe
         saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Saison
         team_name:
           type: string
-          example: "Los Angeles Lakers"
+          maxLength: 100
+          description: Nom de l'équipe
+      required:
+        - abr_equipe
+        - saison
+        - team_name
 
     TeamStatParMatch:
       type: object
       properties:
         saison:
           type: integer
-          example: 2024
+          format: int32
+          description: Saison
         abr_equipe:
           type: string
-          example: "LAL"
+          maxLength: 3
+          description: Abréviation de l'équipe
         lg:
           type: string
-          example: "NBA"
+          maxLength: 3
+          nullable: true
+          description: Ligue
+        team_name:
+          type: string
+          maxLength: 100
+          nullable: true
+          description: Nom de l'équipe
         qualif:
           type: boolean
-          example: true
+          description: Indicateur de qualification
         partie_jouee:
           type: integer
-          example: 82
+          format: int32
+          nullable: true
+          description: Nombre de parties jouées
+        minute_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Minutes jouées par match
         fg_par_match:
           type: number
           format: float
-          example: 40.5
+          nullable: true
+          description: Field goals par match
         fga_par_match:
           type: number
           format: float
-          example: 90.2
+          nullable: true
+          description: Tentatives de field goals par match
         fg_pourcent:
           type: number
           format: float
-          example: 45.0
+          nullable: true
+          description: Pourcentage de field goals
         x3p_par_match:
           type: number
           format: float
-          example: 12.5
+          nullable: true
+          description: Trois points par match
         x3pa_par_match:
           type: number
           format: float
-          example: 35.0
+          nullable: true
+          description: Tentatives de trois points par match
         x3p_pourcent:
           type: number
           format: float
-          example: 35.7
+          nullable: true
+          description: Pourcentage de trois points
+        x2p_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Deux points par match
+        x2pa_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de deux points par match
+        x2p_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de deux points
+        ft_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Lancers francs par match
+        fta_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Tentatives de lancers francs par match
+        ft_pourcent:
+          type: number
+          format: float
+          nullable: true
+          description: Pourcentage de lancers francs
+        orb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Rebonds offensifs par match
+        drb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Rebonds défensifs par match
+        trb_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Total des rebonds par match
+        ast_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Passes décisives par match
+        stl_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Interceptions par match
+        blk_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Contres par match
+        pf_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Fautes personnelles par match
         pts_par_match:
           type: number
           format: float
-          example: 112.3
+          nullable: true
+          description: Points par match
+      required:
+        - saison
+        - abr_equipe
+        - qualif
+
+    Match:
+      type: object
+      properties:
+        game_id:
+          type: integer
+          format: int32
+          description: Identifiant unique du match
+        game_date_est:
+          type: string
+          format: date
+          nullable: true
+          description: Date du match (EST)
+        team_abbreviation_home:
+          type: string
+          maxLength: 3
+          description: Abréviation de l'équipe à domicile
+        pts_home:
+          type: integer
+          format: int32
+          description: Points marqués par l'équipe à domicile
+        team_abbreviation_away:
+          type: string
+          maxLength: 3
+          description: Abréviation de l'équipe à l'extérieur
+        pts_away:
+          type: integer
+          format: int32
+          description: Points marqués par l'équipe à l'extérieur
+      required:
+        - game_id
+        - team_abbreviation_home
+        - pts_home
+        - team_abbreviation_away
+        - pts_away
+
+    ABA:
+      type: object
+      properties:
+        abr_equipe:
+          type: string
+          maxLength: 3
+          description: Abréviation de l'équipe
+        saison:
+          type: integer
+          format: int32
+          description: Saison
+        qualif:
+          type: boolean
+          nullable: true
+          description: Indicateur de qualification
+      required:
+        - abr_equipe
+        - saison
+
+    NBA:
+      type: object
+      properties:
+        abr_equipe:
+          type: string
+          maxLength: 3
+          description: Abréviation de l'équipe
+        saison:
+          type: integer
+          format: int32
+          description: Saison
+        qualif:
+          type: boolean
+          nullable: true
+          description: Indicateur de qualification
+      required:
+        - abr_equipe
+        - saison

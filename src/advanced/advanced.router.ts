@@ -1,6 +1,15 @@
 import { Router } from "express";
-import { getAdvanced, getAdvanceds } from "./advanced.controller";
+import {
+  createAdvanced,
+  deleteAdvanced,
+  getAdvanced,
+  getAdvanceds,
+  updateAdvanced,
+} from "./advanced.controller";
 
 export const advancedRouter = Router();
-advancedRouter.use("/advanceds", getAdvanceds);
-advancedRouter.use("/advanced/:id/:saison/:abr", getAdvanced);
+advancedRouter.get("/advanceds", getAdvanceds);
+advancedRouter.get("/advanced/:id/:saison/:abr", getAdvanced);
+advancedRouter.post("/advanced/", createAdvanced);
+advancedRouter.patch("/advanced/:id/:saison_param/:abr", updateAdvanced);
+advancedRouter.delete("/advanced/:id/:saison/:abr", deleteAdvanced);

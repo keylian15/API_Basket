@@ -75,7 +75,7 @@ export const createTeam = async (req: Request, res: Response) => {
         saison,
       },
     });
-    res.status(201).json({ data: team });
+    res.status(201).json({ message: "Team created" });
   } catch (error: any) {
     res
       .status(500)

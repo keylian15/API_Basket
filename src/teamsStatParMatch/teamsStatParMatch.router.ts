@@ -8,6 +8,6 @@ export const teamStatParMatch = Router();
 
 teamStatParMatch.get("/teamsStatParMatch", getTeamsStatParMatch);
 teamStatParMatch.get(
-  "/teamStatParMatch/:saison/:arb/:qualif",
+  "/teamStatParMatch/:saison/:abr/:qualif",
   getTeamStatParMatch
 );

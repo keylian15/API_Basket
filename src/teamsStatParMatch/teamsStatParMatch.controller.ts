@@ -17,8 +17,8 @@ export const getTeamsStatParMatch = async (_req: Request, res: Response) => {
 
 export const getTeamStatParMatch = async (req: Request, res: Response) => {
   try {
-    const { saison, arb, qualif } = req.params;
-    if (!saison || !arb || !qualif) {
+    const { saison, abr, qualif } = req.params;
+    if (!saison || !abr || !qualif) {
       res.status(400).json({ error: "Missing parameters" });
       return;
     }
@@ -29,7 +29,7 @@ export const getTeamStatParMatch = async (req: Request, res: Response) => {
 
     const team = await prisma.team_stat_par_match.findFirst({
       where: {
-        abr_equipe: arb.toUpperCase(),
+        abr_equipe: abr.toUpperCase(),
         saison: Number(saison),
         qualif: qualifBoolean,
       },

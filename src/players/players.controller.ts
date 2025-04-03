@@ -20,7 +20,7 @@ export const getPlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const player = await prisma.player_career_info.findUnique({
@@ -90,7 +90,7 @@ export const updatePlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const { id_joueur, nom_joueur, annee_naissance, prem_saison, dern_saison } =
@@ -152,7 +152,7 @@ export const deletePlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const playerExist = await prisma.player_career_info.findUnique({

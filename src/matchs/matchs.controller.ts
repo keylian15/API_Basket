@@ -55,7 +55,7 @@ export const createMatch = async (req: Request, res: Response) => {
         res.status(400).json({ error: "Game_id must be a positive integer" });
         return;
       }
-      // Verification unicité
+      // Vérification unicité
       const match = await prisma.match.findUnique({
         where: {
           game_id: Number(game_id),
@@ -67,30 +67,30 @@ export const createMatch = async (req: Request, res: Response) => {
         return;
       }
     } else {
-      res.status(400).json({ error: "Missing game_id" });
+      res.status(400).json({ error: "Game_id required" });
       return;
     }
     if (!team_abbreviation_home) {
-      res.status(400).json({ error: "Missing team home ABR" });
+      res.status(400).json({ error: "Team_home_ABR required" });
       return;
     }
     if (pts_home) {
       if (pts_home < 0) {
         res
           .status(400)
-          .json({ error: "Pts team home must be a positive integer" });
+          .json({ error: "Pts_team_home must be a positive integer" });
         return;
       }
     }
     if (!team_abbreviation_away) {
-      res.status(400).json({ error: "Missing team away ABR" });
+      res.status(400).json({ error: "Team_away_ABR required" });
       return;
     }
     if (pts_away) {
       if (pts_away < 0) {
         res
           .status(400)
-          .json({ error: "Pts team away must be a positive integer" });
+          .json({ error: "Pts_team_away must be a positive integer" });
         return;
       }
     }

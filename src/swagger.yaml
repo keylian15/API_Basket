@@ -1109,7 +1109,7 @@ paths:
                   error:
                     type: string
                     example: "Error while deleting team"
-  /teamsStatParMatch:
+  /teamsStatsParMatch:
     get:
       summary: Obtenez toutes les statistiques des équipes par match
       tags: [TeamStats]
@@ -1124,7 +1124,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/TeamStatParMatch"
+                      $ref: "#/components/schemas/TeamStatsParMatch"
         404:
           description: Aucune statistique d'équipe trouvée
           content:
@@ -1145,7 +1145,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching stats"
-  /teamStatParMatch/{saison}/{arb_team}/{qualif}:
+  /TeamStatsParMatch/{saison}/{arb_team}/{qualif}:
     get:
       summary: Obtenez les statistiques d'une équipe par match en fonction de la saison, de l'équipe, de la ligue et de la qualification
       tags: [TeamStats]
@@ -1177,7 +1177,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/TeamStatParMatch"
+                    $ref: "#/components/schemas/TeamStatsParMatch"
         404:
           description: Statistiques d'équipe non trouvées
           content:
@@ -1498,6 +1498,11 @@ components:
           format: float
           nullable: true
           description: Contres adverses par match
+        opp_tov_par_match:
+          type: number
+          format: float
+          nullable: true
+          description: Transmissions de ballon adverses par match
         opp_pf_par_match:
           type: number
           format: float
@@ -1508,6 +1513,11 @@ components:
           format: float
           nullable: true
           description: Points adverses par match
+        opp_possession:
+          type: number
+          format: float
+          nullable: true
+          description: Possession adverse
       required:
         - abr_equipe
         - saison
@@ -1558,7 +1568,7 @@ components:
         - saison
         - team_name
 
-    TeamStatParMatch:
+    TeamStatsParMatch:
       type: object
       properties:
         saison:
@@ -1692,6 +1702,11 @@ components:
           format: float
           nullable: true
           description: Points par match
+        possession:
+          type: number
+          format: float
+          nullable: true
+          description: Possessions
       required:
         - saison
         - abr_equipe

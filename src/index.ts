@@ -4,7 +4,7 @@ import { playerRouter } from "./players/players.router";
 import { userRouter } from "./users/users.router";
 import { playerParMatchRouter } from "./playersParMatch/playersParMatch.router";
 import { advancedRouter } from "./advanced/advanced.router";
-import { teamStatParMatch } from "./teamsStatParMatch/teamsStatParMatch.router";
+import { teamStatsParMatch } from "./teamsStatsParMatch/teamsStatsParMatch.router";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
@@ -27,7 +27,7 @@ app.use(playerRouter);
 app.use(playerParMatchRouter);
 app.use(playerDirectory);
 app.use(teamRouter);
-app.use(teamStatParMatch);
+app.use(teamStatsParMatch);
 app.use(advancedRouter);
 app.use(opponentStatsParMatch);
 

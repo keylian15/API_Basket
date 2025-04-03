@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import prisma from "../client";
 
-export const getTeamsStatParMatch = async (_req: Request, res: Response) => {
+export const getTeamsStatsParMatch = async (_req: Request, res: Response) => {
   try {
-    const teams = await prisma.team_stat_par_match.findMany();
+    const teams = await prisma.team_stats_par_match.findMany();
 
     if (teams.length === 0) {
       res.status(404).json({ error: "No teams stat found" });
@@ -15,7 +15,7 @@ export const getTeamsStatParMatch = async (_req: Request, res: Response) => {
   }
 };
 
-export const getTeamStatParMatch = async (req: Request, res: Response) => {
+export const getTeamStatsParMatch = async (req: Request, res: Response) => {
   try {
     const { saison, abr, qualif } = req.params;
     if (!saison || !abr || !qualif) {
@@ -27,7 +27,7 @@ export const getTeamStatParMatch = async (req: Request, res: Response) => {
       qualifBoolean = false;
     }
 
-    const team = await prisma.team_stat_par_match.findFirst({
+    const team = await prisma.team_stats_par_match.findFirst({
       where: {
         abr_equipe: abr.toUpperCase(),
         saison: Number(saison),

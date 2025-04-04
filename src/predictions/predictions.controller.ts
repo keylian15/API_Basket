@@ -213,8 +213,6 @@ export const predictionTeam = async (req: Request, res: Response) => {
       percentT1 = 100 - percentT2;
     }
 
-    console.log(percentT1, percentT2);
-
     const matchPrediction = simulateMatchStats(
       averagesT1,
       percentT1 / 100,

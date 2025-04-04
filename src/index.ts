@@ -11,6 +11,7 @@ import path from "path";
 import { playerDirectory } from "./playersDirectory/playersDirectory.router";
 import { opponentStatsParMatch } from "./opponentStatsParMatch/opponentStatsParMatch.router";
 import { matchRouter } from "./matchs/matchs.router";
+import { predictionRouter } from "./predictions/predictions.router";
 
 export const app = express();
 const port = 11042;
@@ -32,7 +33,7 @@ app.use(teamStatsParMatch);
 app.use(advancedRouter);
 app.use(opponentStatsParMatch);
 app.use(matchRouter);
-
+app.use(predictionRouter);
 export const server = app.listen(port);
 
 console.log(`Server is running on port ${port}`);

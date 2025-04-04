@@ -12,7 +12,7 @@ export const teamStatsParMatch = Router();
 
 teamStatsParMatch.get("/teamsStatsParMatch", verifyJWT, getTeamsStatsParMatch);
 teamStatsParMatch.get(
-  "/teamStatsParMatch/:saison/:abr/:qualif",
+  "/teamStatsParMatch/:saison/:abr",
   verifyJWT,
   getTeamStatsParMatch
 );
@@ -23,13 +23,13 @@ teamStatsParMatch.post(
   createTeamStatsParMatch
 );
 teamStatsParMatch.patch(
-  "/teamStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
+  "/teamStatsParMatch/:saison_param/:abr_equipe_param",
   verifyJWT,
   verifyAdmin,
   updateTeamStatsParMatch
 );
 teamStatsParMatch.delete(
-  "/teamStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
+  "/teamStatsParMatch/:saison_param/:abr_equipe_param",
   verifyJWT,
   verifyAdmin,
   deleteTeamStatsParMatch

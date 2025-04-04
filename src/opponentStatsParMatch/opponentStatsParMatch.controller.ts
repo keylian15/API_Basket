@@ -23,8 +23,8 @@ export const getOpponentsStatsParMatch = async (
 
 export const getOpponentStatsParMatch = async (req: Request, res: Response) => {
   try {
-    const { saison, abr, qualif } = req.params;
-    if (!saison || !abr || !qualif) {
+    const { saison, abr } = req.params;
+    if (!saison || !abr) {
       res.status(400).json({ error: "Missing parameters" });
       return;
     }
@@ -33,7 +33,6 @@ export const getOpponentStatsParMatch = async (req: Request, res: Response) => {
       where: {
         saison: Number(saison),
         abr_equipe: abr.toUpperCase(),
-        qualif: qualif === "true",
       },
     });
 
@@ -94,10 +93,6 @@ export const createOpponentStatsParMatch = async (
     }
     if (!abr_equipe) {
       res.status(400).json({ error: "Abr_equipe required" });
-      return;
-    }
-    if (qualif.length === 0) {
-      res.status(400).json({ error: "Qualif required" });
       return;
     }
 
@@ -181,8 +176,8 @@ export const updateOpponentStatsParMatch = async (
 ) => {
   try {
     // Verification parametre
-    const { saison_param, abr_equipe_param, qualif_param } = req.params;
-    if (!saison_param || !abr_equipe_param || qualif_param.length === 0) {
+    const { saison_param, abr_equipe_param } = req.params;
+    if (!saison_param || !abr_equipe_param) {
       res.status(400).json({ error: "Missing parameters" });
       return;
     }
@@ -193,7 +188,6 @@ export const updateOpponentStatsParMatch = async (
         where: {
           saison: Number(saison_param),
           abr_equipe: abr_equipe_param.toUpperCase(),
-          qualif: qualif_param === "true",
         },
       });
 
@@ -243,10 +237,6 @@ export const updateOpponentStatsParMatch = async (
       res.status(400).json({ error: "Abr_equipe required" });
       return;
     }
-    if (qualif.length === 0) {
-      res.status(400).json({ error: "Qualif required" });
-      return;
-    }
 
     // Verification unicité
     const existingOpponentStatsParMatch =
@@ -254,11 +244,9 @@ export const updateOpponentStatsParMatch = async (
         where: {
           saison: Number(saison),
           abr_equipe: abr_equipe.toUpperCase(),
-          qualif,
           NOT: {
             saison: Number(saison_param),
             abr_equipe: abr_equipe_param.toUpperCase(),
-            qualif: qualif_param === "true",
           },
         },
       });
@@ -286,10 +274,9 @@ export const updateOpponentStatsParMatch = async (
     // Update
     await prisma.opponent_stats_par_match.update({
       where: {
-        abr_equipe_saison_qualif: {
+        abr_equipe_saison: {
           saison: Number(saison_param),
           abr_equipe: abr_equipe_param.toUpperCase(),
-          qualif: qualif_param == "true",
         },
       },
 
@@ -339,8 +326,8 @@ export const deleteOpponentStatsParMatch = async (
   res: Response
 ) => {
   try {
-    const { saison_param, abr_equipe_param, qualif_param } = req.params;
-    if (!saison_param || !abr_equipe_param || qualif_param.length === 0) {
+    const { saison_param, abr_equipe_param } = req.params;
+    if (!saison_param || !abr_equipe_param) {
       res.status(400).json({ error: "Missing parameters" });
       return;
     }
@@ -350,7 +337,6 @@ export const deleteOpponentStatsParMatch = async (
         where: {
           saison: Number(saison_param),
           abr_equipe: abr_equipe_param.toUpperCase(),
-          qualif: qualif_param === "true",
         },
       });
 
@@ -361,10 +347,9 @@ export const deleteOpponentStatsParMatch = async (
 
     await prisma.opponent_stats_par_match.delete({
       where: {
-        abr_equipe_saison_qualif: {
+        abr_equipe_saison: {
           saison: Number(saison_param),
           abr_equipe: abr_equipe_param.toUpperCase(),
-          qualif: qualif_param === "true",
         },
       },
     });

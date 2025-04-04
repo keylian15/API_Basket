@@ -16,7 +16,7 @@ opponentStatsParMatch.get(
   getOpponentsStatsParMatch
 );
 opponentStatsParMatch.get(
-  "/opponentStatsParMatch/:saison/:abr/:qualif",
+  "/opponentStatsParMatch/:saison/:abr",
   verifyJWT,
   getOpponentStatsParMatch
 );
@@ -27,13 +27,13 @@ opponentStatsParMatch.post(
   createOpponentStatsParMatch
 );
 opponentStatsParMatch.patch(
-  "/opponentStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
+  "/opponentStatsParMatch/:saison_param/:abr_equipe_param",
   verifyJWT,
   verifyAdmin,
   updateOpponentStatsParMatch
 );
 opponentStatsParMatch.delete(
-  "/opponentStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
+  "/opponentStatsParMatch/:saison_param/:abr_equipe_param",
   verifyJWT,
   verifyAdmin,
   deleteOpponentStatsParMatch

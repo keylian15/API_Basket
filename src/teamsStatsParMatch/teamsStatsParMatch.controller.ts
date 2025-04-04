@@ -211,6 +211,19 @@ export const updateTeamStatsParMatch = async (req: Request, res: Response) => {
       possession,
     } = req.body;
 
+    if (!saison) {
+      res.status(400).json({ error: "Saison required" });
+      return;
+    }
+    if (!abr_equipe) {
+      res.status(400).json({ error: "Abr_equipe required" });
+      return;
+    }
+    if (qualif.length === 0) {
+      res.status(400).json({ error: "Qualif required" });
+      return;
+    }
+
     // Verification unicité
     const uniqueTeamStatsParMatch = await prisma.team_stats_par_match.findFirst(
       {

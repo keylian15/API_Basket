@@ -6,27 +6,31 @@ import {
   getTeamsStatsParMatch,
   updateTeamStatsParMatch,
 } from "./teamsStatsParMatch.controller";
-import { verifyJWT } from "../commun/commun.middleware ";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const teamStatsParMatch = Router();
 
-teamStatsParMatch.get("/teamsStatsParMatch", getTeamsStatsParMatch);
+teamStatsParMatch.get("/teamsStatsParMatch", verifyJWT, getTeamsStatsParMatch);
 teamStatsParMatch.get(
   "/teamStatsParMatch/:saison/:abr/:qualif",
+  verifyJWT,
   getTeamStatsParMatch
 );
 teamStatsParMatch.post(
   "/teamStatsParMatch",
   verifyJWT,
+  verifyAdmin,
   createTeamStatsParMatch
 );
 teamStatsParMatch.patch(
   "/teamStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
   verifyJWT,
+  verifyAdmin,
   updateTeamStatsParMatch
 );
 teamStatsParMatch.delete(
   "/teamStatsParMatch/:saison_param/:abr_equipe_param/:qualif_param",
   verifyJWT,
+  verifyAdmin,
   deleteTeamStatsParMatch
 );

@@ -6,10 +6,21 @@ import {
   getAdvanceds,
   updateAdvanced,
 } from "./advanced.controller";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const advancedRouter = Router();
-advancedRouter.get("/advanceds", getAdvanceds);
-advancedRouter.get("/advanced/:id/:saison/:abr", getAdvanced);
-advancedRouter.post("/advanced/", createAdvanced);
-advancedRouter.patch("/advanced/:id/:saison_param/:abr", updateAdvanced);
-advancedRouter.delete("/advanced/:id/:saison/:abr", deleteAdvanced);
+advancedRouter.get("/advanceds", verifyJWT, getAdvanceds);
+advancedRouter.get("/advanced/:id/:saison/:abr", verifyJWT, getAdvanced);
+advancedRouter.post("/advanced/", verifyJWT, verifyAdmin, createAdvanced);
+advancedRouter.patch(
+  "/advanced/:id/:saison_param/:abr",
+  verifyJWT,
+  verifyAdmin,
+  updateAdvanced
+);
+advancedRouter.delete(
+  "/advanced/:id/:saison/:abr",
+  verifyJWT,
+  verifyAdmin,
+  deleteAdvanced
+);

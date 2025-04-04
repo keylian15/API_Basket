@@ -6,23 +6,31 @@ import {
   getPlayersDirectory,
   updatePlayerDirectory,
 } from "./playersDirectory.controller";
-import { verifyJWT } from "../commun/commun.middleware ";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const playerDirectory = Router();
 
-playerDirectory.get("/playersDirectory", getPlayersDirectory);
+playerDirectory.get("/playersDirectory", verifyJWT, getPlayersDirectory);
 playerDirectory.get(
   "/playerDirectory/:nom_joueur/:date_naissance",
+  verifyJWT,
   getPlayerDirectory
 );
-playerDirectory.post("/playerDirectory", verifyJWT, createPlayerDirectory);
+playerDirectory.post(
+  "/playerDirectory",
+  verifyJWT,
+  verifyAdmin,
+  createPlayerDirectory
+);
 playerDirectory.patch(
   "/playerDirectory/:nom_joueur_param/:date_naissance_param",
   verifyJWT,
+  verifyAdmin,
   updatePlayerDirectory
 );
 playerDirectory.delete(
   "/playerDirectory/:nom_joueur_param/:date_naissance_param",
   verifyJWT,
+  verifyAdmin,
   deletePlayerDirectory
 );

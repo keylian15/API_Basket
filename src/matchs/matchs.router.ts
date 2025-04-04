@@ -6,12 +6,12 @@ import {
   createMatch,
   deleteMatch,
 } from "./matchs.controller";
-import { verifyJWT } from "../commun/commun.middleware ";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const matchRouter = Router();
 
-matchRouter.get("/matchs", getMatchs);
-matchRouter.get("/match/:gameId", getMatch);
-matchRouter.post("/match", verifyJWT, createMatch);
-matchRouter.patch("/match/:gameId", verifyJWT, updateMatch);
-matchRouter.delete("/match/:gameId", verifyJWT, deleteMatch);
+matchRouter.get("/matchs", verifyJWT, getMatchs);
+matchRouter.get("/match/:gameId", verifyJWT, getMatch);
+matchRouter.post("/match", verifyJWT, verifyAdmin, createMatch);
+matchRouter.patch("/match/:gameId", verifyJWT, verifyAdmin, updateMatch);
+matchRouter.delete("/match/:gameId", verifyJWT, verifyAdmin, deleteMatch);

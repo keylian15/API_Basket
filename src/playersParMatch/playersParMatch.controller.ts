@@ -69,6 +69,22 @@ export const createPlayerParMatch = async (req: Request, res: Response) => {
       },
     });
 
+    if (!saison) {
+      res.status(400).json({ error: "Saison required" });
+      return;
+    }
+    if (!id_joueur) {
+      res.status(400).json({ error: "Id_joueur required" });
+      return;
+    }
+    if (!nom_joueur) {
+      res.status(400).json({ error: "Nom_joueur required" });
+      return;
+    }
+    if (!minutes_jouees) {
+      res.status(400).json({ error: "Minutes_jouees required" });
+    }
+
     if (!player) {
       res.status(400).json({ error: "Player not found" });
       return;
@@ -159,6 +175,22 @@ export const updatePlayerParMatch = async (req: Request, res: Response) => {
       contre,
       points,
     } = req.body;
+
+    if (!saison) {
+      res.status(400).json({ error: "Saison required" });
+      return;
+    }
+    if (!id_joueur) {
+      res.status(400).json({ error: "Id_joueur required" });
+      return;
+    }
+    if (!nom_joueur) {
+      res.status(400).json({ error: "Nom_joueur required" });
+      return;
+    }
+    if (!minutes_jouees) {
+      res.status(400).json({ error: "Minutes_jouees required" });
+    }
 
     // Verification fk (id_joueur)
     const existPlayer = await prisma.player_career_info.findUnique({

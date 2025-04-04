@@ -1,6 +1,26 @@
 import { Router } from "express";
-import { getAdvanced, getAdvanceds } from "./advanced.controller";
+import {
+  createAdvanced,
+  deleteAdvanced,
+  getAdvanced,
+  getAdvanceds,
+  updateAdvanced,
+} from "./advanced.controller";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const advancedRouter = Router();
-advancedRouter.use("/advanceds", getAdvanceds);
-advancedRouter.use("/advanced/:id/:saison/:abr", getAdvanced);
+advancedRouter.get("/advanceds", verifyJWT, getAdvanceds);
+advancedRouter.get("/advanced/:id/:saison/:abr", verifyJWT, getAdvanced);
+advancedRouter.post("/advanced/", verifyJWT, verifyAdmin, createAdvanced);
+advancedRouter.patch(
+  "/advanced/:id/:saison_param/:abr",
+  verifyJWT,
+  verifyAdmin,
+  updateAdvanced
+);
+advancedRouter.delete(
+  "/advanced/:id/:saison/:abr",
+  verifyJWT,
+  verifyAdmin,
+  deleteAdvanced
+);

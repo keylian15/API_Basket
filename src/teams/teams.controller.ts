@@ -25,7 +25,7 @@ export const getTeam = async (req: Request, res: Response) => {
 
     const team = await prisma.team.findFirst({
       where: {
-        abr_equipe: abr,
+        abr_equipe: abr.toUpperCase(),
         saison: Number(saison),
       },
     });
@@ -68,14 +68,14 @@ export const createTeam = async (req: Request, res: Response) => {
       return;
     }
     // Create
-    const team = await prisma.team.create({
+    await prisma.team.create({
       data: {
         abr_equipe,
         team_name,
         saison,
       },
     });
-    res.status(201).json({ data: team });
+    res.status(201).json({ message: "Team created" });
   } catch (error: any) {
     res
       .status(500)

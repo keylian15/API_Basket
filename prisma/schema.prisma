@@ -7,44 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id       Int      @id @default(autoincrement())
-  password String
-  email    String   @unique
-  is_admin Boolean? @default(false)
-}
-
-model player_career_info {
-  id_joueur          Int                  @id
-  nom_joueur         String               @db.VarChar(100)
-  annee_naissance    Int?
-  prem_saison        Int
-  dern_saison        Int
-  classement_joueurs classement_joueurs[]
-  player_par_match   player_par_match[]
-}
-
-model player_par_match {
-  saison             Int
-  id_joueur          Int
-  nom_joueur         String             @db.VarChar(100)
-  annee_naissance    Int?
-  abr_equipe         String             @db.VarChar(3)
-  minutes_jouees     Float?
-  pourcent_fg        Float?
-  pourcent_trois_pts Float?
-  pourcent_efg       Float?
-  pourcent_ft        Float?
-  rebond             Int?
-  passe              Int?
-  interception       Int?
-  contre             Int?
-  points             Int?
-  player_career_info player_career_info @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_player_par_match_player_career_info")
-
-  @@id([saison, id_joueur, abr_equipe])
-}
-
 model advanced {
   id_joueur       Int
   saison          Int
@@ -55,6 +17,15 @@ model advanced {
   annee_naissance Int?
 
   @@id([id_joueur, saison, abr_equipe])
+}
+
+model match {
+  game_id                Int       @id
+  game_date_est          DateTime? @db.Date
+  team_abbreviation_home String    @db.VarChar(3)
+  pts_home               Int
+  team_abbreviation_away String    @db.VarChar(3)
+  pts_away               Int
 }
 
 model opponent_stats_par_match {
@@ -92,6 +63,15 @@ model opponent_stats_par_match {
   @@id([abr_equipe, saison, qualif])
 }
 
+model player_career_info {
+  id_joueur        Int                @id
+  nom_joueur       String             @db.VarChar(100)
+  annee_naissance  Int?
+  prem_saison      Int
+  dern_saison      Int
+  player_par_match player_par_match[]
+}
+
 model player_directory {
   nom_joueur     String   @db.VarChar(100)
   date_naissance DateTime @db.Date
@@ -99,6 +79,27 @@ model player_directory {
   poids          Int?
 
   @@id([nom_joueur, date_naissance])
+}
+
+model player_par_match {
+  saison             Int
+  id_joueur          Int
+  nom_joueur         String             @db.VarChar(100)
+  annee_naissance    Int?
+  abr_equipe         String             @db.VarChar(3)
+  minutes_jouees     Float?
+  pourcent_fg        Float?
+  pourcent_trois_pts Float?
+  pourcent_efg       Float?
+  pourcent_ft        Float?
+  rebond             Int?
+  passe              Int?
+  interception       Int?
+  contre             Int?
+  points             Int?
+  player_career_info player_career_info @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_player_par_match_player_career_info")
+
+  @@id([saison, id_joueur, abr_equipe])
 }
 
 model team {
@@ -111,44 +112,6 @@ model team {
   team_stats_par_match     team_stats_par_match[]
 
   @@id([abr_equipe, saison])
-}
-
-model match {
-  game_id                Int       @id
-  game_date_est          DateTime? @db.Date
-  team_abbreviation_home String    @db.VarChar(3)
-  pts_home               Int
-  team_abbreviation_away String    @db.VarChar(3)
-  pts_away               Int
-}
-
-model aba {
-  abr_equipe String   @db.VarChar(3)
-  saison     Int
-  qualif     Boolean?
-  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([abr_equipe, saison])
-}
-
-model nba {
-  abr_equipe String   @db.VarChar(3)
-  saison     Int
-  qualif     Boolean?
-  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([abr_equipe, saison])
-}
-
-model classement_joueurs {
-  id                 Int                 @id @default(autoincrement())
-  nom_joueur         String?             @db.VarChar(100)
-  abr_equipe         String?             @db.VarChar(3)
-  saison             Int?
-  classement_type    String?             @db.VarChar(50)
-  valeur             Float?              @db.Real
-  id_joueur          Int?
-  player_career_info player_career_info? @relation(fields: [id_joueur], references: [id_joueur], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_joueur")
 }
 
 model team_stats_par_match {
@@ -183,4 +146,129 @@ model team_stats_par_match {
   team             team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([saison, abr_equipe, qualif])
+}
+
+model users {
+  id       Int      @id @default(autoincrement())
+  password String
+  email    String   @unique
+  is_admin Boolean? @default(false)
+}
+
+model aba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
+}
+
+model nba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
+}
+
+model classement_joueurs_contres {
+  id_joueur    Int
+  nom_joueur   String? @db.VarChar(100)
+  position     Int?
+  saison       Int
+  stat_contres Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_fg {
+  id_joueur  Int
+  nom_joueur String? @db.VarChar(100)
+  position   Int?
+  saison     Int
+  stat_fg    Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_ft {
+  id_joueur  Int
+  nom_joueur String? @db.VarChar(100)
+  position   Int?
+  saison     Int
+  stat_ft    Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_interceptions {
+  id_joueur          Int
+  nom_joueur         String? @db.VarChar(100)
+  position           Int?
+  saison             Int
+  stat_interceptions Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_minutes {
+  id_joueur    Int
+  nom_joueur   String? @db.VarChar(100)
+  position     Int?
+  saison       Int
+  stat_minutes Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_passes {
+  id_joueur   Int
+  nom_joueur  String? @db.VarChar(100)
+  position    Int?
+  saison      Int
+  stat_passes Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_points {
+  id_joueur   Int
+  nom_joueur  String? @db.VarChar(100)
+  position    Int?
+  saison      Int
+  stat_points Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_rebonds {
+  id_joueur    Int
+  nom_joueur   String? @db.VarChar(100)
+  position     Int?
+  saison       Int
+  stat_rebonds Int?
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_tir {
+  id_joueur  Int
+  nom_joueur String? @db.VarChar(100)
+  position   Int?
+  saison     Int
+  stat_tir   Float?  @db.Real
+
+  @@id([id_joueur, saison])
+}
+
+model classement_joueurs_trois_pts {
+  id_joueur      Int
+  nom_joueur     String? @db.VarChar(100)
+  position       Int?
+  saison         Int
+  stat_trois_pts Int?
+
+  @@id([id_joueur, saison])
 }

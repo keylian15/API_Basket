@@ -6,12 +6,17 @@ import {
   getTeams,
   updateTeam,
 } from "./teams.controller";
-import { verifyJWT } from "../commun/commun.midleware";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const teamRouter = Router();
 
-teamRouter.get("/teams", getTeams);
-teamRouter.get("/team/:saison/:abr", getTeam);
+teamRouter.get("/teams", verifyJWT, getTeams);
+teamRouter.get("/team/:saison/:abr", verifyJWT, getTeam);
 teamRouter.post("/team", verifyJWT, createTeam);
-teamRouter.patch("/team/:saison_param/:abr_param", verifyJWT, updateTeam);
-teamRouter.delete("/team/:saison/:abr", verifyJWT, deleteTeam);
+teamRouter.patch(
+  "/team/:saison_param/:abr_param",
+  verifyJWT,
+  verifyAdmin,
+  updateTeam
+);
+teamRouter.delete("/team/:saison/:abr", verifyJWT, verifyAdmin, deleteTeam);

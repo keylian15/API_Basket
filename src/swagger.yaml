@@ -3,6 +3,7 @@ info:
   title: Basketball API
   version: 1.0.0
   description: API pour récupérer les informations de basketball ainsi que des prédictions.
+
 servers:
   - url: "http://62.72.18.63:11042"
     description: "Serveur principal"
@@ -662,7 +663,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching opponent stats"
-  /opponentStatsParMatch/{saison}/{abr}:
+  /opponentStatsParMatch/{saison}/{abr}/{qualif}:
     get:
       summary: Obtenez les statistiques des adversaires par saison et équipe
       tags: [OpponentStats]
@@ -679,6 +680,12 @@ paths:
           schema:
             type: string
           description: Abréviation de l'équipe
+        - in: path
+          name: qualif
+          required: true
+          schema:
+            type: boolean
+            example: true
       responses:
         200:
           description: Statistiques des adversaires trouvées
@@ -1109,6 +1116,7 @@ paths:
                   error:
                     type: string
                     example: "Error while deleting team"
+
   /teamsStatsParMatch:
     get:
       summary: Obtenez toutes les statistiques des équipes par match
@@ -1198,6 +1206,84 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching stats"
+
+  /matchs:
+    get:
+      summary: Obtenez tous les matchs
+      tags: [Match]
+      responses:
+        200:
+          description: Liste des matchs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Match"
+        404:
+          description: Aucun match trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Match not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching matches"
+  /match/{game_id}:
+    get:
+      summary: Obtenez les détails d'un match par son ID
+      tags: [Match]
+      parameters:
+        - in: path
+          name: game_id
+          required: true
+          schema:
+            type: integer
+          description: ID du match
+      responses:
+        200:
+          description: Détails du match trouvés
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Match"
+        404:
+          description: Match non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Match not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching match"
 
 components:
   schemas:

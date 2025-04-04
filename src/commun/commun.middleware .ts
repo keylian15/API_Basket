@@ -20,3 +20,16 @@ export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(401);
   }
 };
+
+export const verifyAdmin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (Number(req.query.userId) === 1) {
+    next();
+  } else {
+    res.status(403).json({ error: "Access denied. You must be an admin." });
+    return;
+  }
+};

@@ -6,12 +6,12 @@ import {
   updatePlayer,
   deletePlayer,
 } from "./players.controller";
-import { verifyJWT } from "../commun/commun.midleware";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const playerRouter = Router();
 
-playerRouter.get("/players", getPlayers);
-playerRouter.get("/player/:id", getPlayer);
-playerRouter.post("/player", verifyJWT, createPlayer);
-playerRouter.patch("/player/:id", verifyJWT, updatePlayer);
-playerRouter.delete("/player/:id", verifyJWT, deletePlayer);
+playerRouter.get("/players", verifyJWT, getPlayers);
+playerRouter.get("/player/:id", verifyJWT, getPlayer);
+playerRouter.post("/player", verifyJWT, verifyAdmin, createPlayer);
+playerRouter.patch("/player/:id", verifyJWT, verifyAdmin, updatePlayer);
+playerRouter.delete("/player/:id", verifyJWT, verifyAdmin, deletePlayer);

@@ -7,13 +7,13 @@ import {
   login,
   updateUser,
 } from "./users.controller";
-import { verifyJWT } from "../commun/commun.midleware";
+import { verifyAdmin, verifyJWT } from "../commun/commun.middleware ";
 
 export const userRouter = Router();
 
-userRouter.get("/users", getUsers);
-userRouter.post("/user", createUser);
-userRouter.get("/user/:userId", getUser);
-userRouter.patch("/user/:userId", verifyJWT, updateUser);
-userRouter.delete("/user/:userId", verifyJWT, deleteUser);
+userRouter.get("/users", verifyJWT, getUsers);
+userRouter.get("/user/:userId", verifyJWT, getUser);
+userRouter.post("/user", verifyJWT, verifyAdmin, createUser);
+userRouter.patch("/user/:userId", verifyJWT, verifyAdmin, updateUser);
+userRouter.delete("/user/:userId", verifyJWT, verifyAdmin, deleteUser);
 userRouter.post("/user/login", login);

@@ -20,7 +20,7 @@ export const getPlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const player = await prisma.player_career_info.findUnique({
@@ -70,9 +70,11 @@ export const createPlayer = async (req: Request, res: Response) => {
       res.status(400).json({ error: "Dernier is invalid" });
       return;
     }
+
+    // No need to check if the player already exists because the trigger will do it
     await prisma.player_career_info.create({
       data: {
-        id_joueur: 100000, // auto-incremented by the trigger
+        id_joueur: 0, // auto-incremented by the trigger
         nom_joueur,
         annee_naissance,
         prem_saison,
@@ -90,10 +92,15 @@ export const updatePlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
-    const { nom_joueur, annee_naissance, prem_saison, dern_saison } = req.body;
+    const { id_joueur, nom_joueur, annee_naissance, prem_saison, dern_saison } =
+      req.body;
+    if (!id_joueur) {
+      res.status(400).json({ error: "ID joueur required" });
+      return;
+    }
     if (!nom_joueur) {
       res.status(400).json({ error: "Name required" });
       return;
@@ -124,11 +131,27 @@ export const updatePlayer = async (req: Request, res: Response) => {
         .json({ error: "Dernier season is invalid (lower than 2025)" });
       return;
     }
+
+    // Verification unicité
+    const uniquePlayer = await prisma.player_career_info.findUnique({
+      where: {
+        id_joueur: Number(id_joueur),
+        NOT: {
+          id_joueur: Number(id),
+        },
+      },
+    });
+    if (uniquePlayer) {
+      res.status(400).json({ error: "Player already exists" });
+      return;
+    }
+
     await prisma.player_career_info.update({
       where: {
         id_joueur: Number(id),
       },
       data: {
+        id_joueur: Number(id_joueur),
         nom_joueur,
         annee_naissance,
         prem_saison,
@@ -146,7 +169,7 @@ export const deletePlayer = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ error: "ID required" });
+      res.status(400).json({ error: "Missing parameters" });
       return;
     }
     const playerExist = await prisma.player_career_info.findUnique({

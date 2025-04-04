@@ -173,7 +173,6 @@ model nba {
   @@id([abr_equipe, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_contres {
   id_joueur    Int
   nom_joueur   String? @db.VarChar(100)
@@ -181,32 +180,29 @@ model classement_joueurs_contres {
   saison       Int
   stat_contres Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_fg {
   id_joueur  Int
   nom_joueur String? @db.VarChar(100)
   position   Int?
   saison     Int
-  stat_fg    Float?  @db.Real
+  stat_fg    Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_ft {
   id_joueur  Int
   nom_joueur String? @db.VarChar(100)
   position   Int?
   saison     Int
-  stat_ft    Float?  @db.Real
+  stat_ft    Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_interceptions {
   id_joueur          Int
   nom_joueur         String? @db.VarChar(100)
@@ -214,21 +210,19 @@ model classement_joueurs_interceptions {
   saison             Int
   stat_interceptions Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_minutes {
-  id_joueur  Int
-  nom_joueur String? @db.VarChar(100)
-  position   Int?
-  saison     Int
-  stat_min   Float?  @db.Real
+  id_joueur    Int
+  nom_joueur   String? @db.VarChar(100)
+  position     Int?
+  saison       Int
+  stat_minutes Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_passes {
   id_joueur   Int
   nom_joueur  String? @db.VarChar(100)
@@ -236,10 +230,9 @@ model classement_joueurs_passes {
   saison      Int
   stat_passes Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_points {
   id_joueur   Int
   nom_joueur  String? @db.VarChar(100)
@@ -247,10 +240,9 @@ model classement_joueurs_points {
   saison      Int
   stat_points Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_rebonds {
   id_joueur    Int
   nom_joueur   String? @db.VarChar(100)
@@ -258,7 +250,7 @@ model classement_joueurs_rebonds {
   saison       Int
   stat_rebonds Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }
 
 model classement_joueurs_tir {
@@ -271,13 +263,12 @@ model classement_joueurs_tir {
   @@id([id_joueur, saison])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model classement_joueurs_trois_pts {
   id_joueur      Int
   nom_joueur     String? @db.VarChar(100)
   position       Int?
   saison         Int
-  stat_trois_pts Float?  @db.Real
+  stat_trois_pts Int?
 
-  @@ignore
+  @@id([id_joueur, saison])
 }

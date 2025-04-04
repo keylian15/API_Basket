@@ -61,7 +61,7 @@ model opponent_stats_par_match {
   team               team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([saison, abr_equipe])
-  @@unique([abr_equipe, saison], map: "unique_abr_equipe_saison")
+  @@unique([abr_equipe, saison], map: "unique_abr_equipe_saison_opp")
 }
 
 model player_career_info {
@@ -113,7 +113,6 @@ model team {
   team_stats_par_match     team_stats_par_match?
 
   @@id([abr_equipe, saison])
-  @@unique([abr_equipe, saison])
 }
 
 model team_stats_par_match {
@@ -147,8 +146,7 @@ model team_stats_par_match {
   possession       Float?
   team             team    @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([saison, abr_equipe])
-  @@unique([abr_equipe, saison])
+  @@unique([abr_equipe, saison], map: "unique_abr_equipe_saison_team")
 }
 
 model users {
@@ -277,10 +275,10 @@ model classement_joueurs_trois_pts {
 }
 
 model classement_team_pts {
-  saison           Int
-  abr_equipe       String @db.VarChar(3)
-  classement       Int
-  minute_par_match Float
+  saison        Int
+  abr_equipe    String @db.VarChar(3)
+  classement    Int?
+  pts_par_match Float
 
   @@id([saison, abr_equipe])
 }

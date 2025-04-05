@@ -1,21 +1,21 @@
-// Fichier utilisant la table aba
+// Fichier utilisant la table nba
 import { Request, Response } from "express";
 import prisma from "../client";
 
-export const getAbas = async (_req: Request, res: Response) => {
+export const getNbas = async (_req: Request, res: Response) => {
   try {
-    const abas = await prisma.aba.findMany();
-    if (abas.length === 0) {
-      res.status(404).json({ error: "No ABAS info found" });
+    const nbas = await prisma.nba.findMany();
+    if (nbas.length === 0) {
+      res.status(404).json({ error: "No nbas info found" });
       return;
     }
-    res.status(200).json({ data: abas });
+    res.status(200).json({ data: nbas });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const getAba = async (req: Request, res: Response) => {
+export const getNba = async (req: Request, res: Response) => {
   try {
     const { saison, abr } = req.params;
     // Verification parametre
@@ -24,7 +24,7 @@ export const getAba = async (req: Request, res: Response) => {
       return;
     }
 
-    const aba = await prisma.aba.findUnique({
+    const nba = await prisma.nba.findUnique({
       where: {
         abr_equipe_saison: {
           saison: Number(saison),
@@ -32,12 +32,12 @@ export const getAba = async (req: Request, res: Response) => {
         },
       },
     });
-    if (!aba) {
-      res.status(404).json({ error: "ABA info not found" });
+    if (!nba) {
+      res.status(404).json({ error: "Nba info not found" });
       return;
     }
 
-    res.status(200).json({ data: aba });
+    res.status(200).json({ data: nba });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

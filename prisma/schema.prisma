@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model aba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
+}
+
 model advanced {
   id_joueur       Int
   saison          Int
@@ -26,6 +35,15 @@ model match {
   pts_home               Int
   team_abbreviation_away String    @db.VarChar(3)
   pts_away               Int
+}
+
+model nba {
+  abr_equipe String   @db.VarChar(3)
+  saison     Int
+  qualif     Boolean?
+  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([abr_equipe, saison])
 }
 
 model opponent_stats_par_match {
@@ -154,24 +172,6 @@ model users {
   password String
   email    String   @unique
   is_admin Boolean? @default(false)
-}
-
-model aba {
-  abr_equipe String   @db.VarChar(3)
-  saison     Int
-  qualif     Boolean?
-  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([abr_equipe, saison])
-}
-
-model nba {
-  abr_equipe String   @db.VarChar(3)
-  saison     Int
-  qualif     Boolean?
-  team       team     @relation(fields: [abr_equipe, saison], references: [abr_equipe, saison], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([abr_equipe, saison])
 }
 
 model classement_joueurs_contres {

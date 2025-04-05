@@ -93,7 +93,7 @@ export const createTeamStatsParMatch = async (req: Request, res: Response) => {
       });
 
     if (existingTeamStatsParMatch) {
-      res.status(409).json({ error: "Team stats par match already exists" });
+      res.status(400).json({ error: "Team stats par match already exists" });
       return;
     }
 
@@ -228,7 +228,7 @@ export const updateTeamStatsParMatch = async (req: Request, res: Response) => {
     );
 
     if (uniqueTeamStatsParMatch) {
-      res.status(409).json({ error: "Team stats par match already exists" });
+      res.status(400).json({ error: "Team stats par match already exists" });
       return;
     }
 

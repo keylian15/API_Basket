@@ -94,7 +94,7 @@ export const createAdvanced = async (req: Request, res: Response) => {
     });
 
     if (advancedExist) {
-      res.status(409).json({ error: "Player's advanced info already exists" });
+      res.status(400).json({ error: "Player's advanced info already exists" });
       return;
     }
 
@@ -172,7 +172,7 @@ export const updateAdvanced = async (req: Request, res: Response) => {
     });
 
     if (advancedExist) {
-      res.status(409).json({ error: "Player's advanced info already exists" });
+      res.status(400).json({ error: "Player's advanced info already exists" });
       return;
     }
 

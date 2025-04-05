@@ -108,7 +108,7 @@ export const createOpponentStatsParMatch = async (
 
     if (existingOpponentStatsParMatch) {
       res
-        .status(409)
+        .status(400)
         .json({ error: "Opponent's stats par match already exists" });
       return;
     }

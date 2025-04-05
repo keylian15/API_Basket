@@ -563,7 +563,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching advanced stats"
-  /advanced/{id}/{saison}/{abr_equipe}:
+  /advanced/{id_joueur}/{saison}/{abr_equipe}:
     get:
       summary: Obtenez des statistiques avancées sur un joueur par ID
       tags: [Advanced]
@@ -608,6 +608,172 @@ paths:
                     example: "Missing parameters"
         404:
           description: Statistiques avancées non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player's advanced info not found"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+  /advanced:
+    post:
+      summary: Crée une statistique avancée pour un joueur
+      tags: [Advanced]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Advanced"
+      responses:
+        201:
+          description: Statistique avancée créée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info created"
+        400:
+          description: Données manquantes ou invalides
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Id_joueur required"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+
+  /advanced/{id}/{saison_param}/{abr}:
+    patch:
+      summary: Met à jour les statistiques avancées d’un joueur
+      tags: [Advanced]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Identifiant du joueur (ancien)
+        - in: path
+          name: saison_param
+          required: true
+          schema:
+            type: integer
+          description: Saison actuelle (ancienne)
+        - in: path
+          name: abr
+          required: true
+          schema:
+            type: string
+          description: Abréviation actuelle de l'équipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Advanced"
+      responses:
+        200:
+          description: Statistique avancée mise à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info updated"
+        400:
+          description: Données ou paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Nom_joueur required"
+        500:
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+
+    delete:
+      summary: Supprime les statistiques avancées d’un joueur
+      tags: [Advanced]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Identifiant du joueur
+        - in: path
+          name: saison
+          required: true
+          schema:
+            type: integer
+          description: Année de la saison
+        - in: path
+          name: abr
+          required: true
+          schema:
+            type: string
+          description: Abréviation de l'équipe
+      responses:
+        200:
+          description: Statistique avancée supprimée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info deleted"
+        400:
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        404:
+          description: Statistique avancée non trouvée
           content:
             application/json:
               schema:

@@ -12,7 +12,7 @@ export const teamRouter = Router();
 
 teamRouter.get("/teams", verifyJWT, getTeams);
 teamRouter.get("/team/:saison/:abr", verifyJWT, getTeam);
-teamRouter.post("/team", verifyJWT, createTeam);
+teamRouter.post("/team", verifyJWT, verifyAdmin, createTeam);
 teamRouter.patch(
   "/team/:saison_param/:abr_param",
   verifyJWT,

@@ -126,6 +126,20 @@ export const updateAdvanced = async (req: Request, res: Response) => {
       return;
     }
 
+    // Verification existe
+    const advanced = await prisma.advanced.findFirst({
+      where: {
+        id_joueur: Number(id),
+        saison: Number(saison_param),
+        abr_equipe: abr.toUpperCase(),
+      },
+    });
+
+    if (!advanced) {
+      res.status(404).json({ error: "Player's advanced info not found" });
+      return;
+    }
+
     // Verification des champs
     const {
       id_joueur,

@@ -9,10 +9,14 @@ servers:
     description: "Serveur principal"
 
 tags:
+  - name: Aba
+    description: Informations de base des joueurs ABA
   - name: Advanced
     description: Informations avancées des joueurs
   - name: Match
     description: Informations sur les matchs
+  - name: Nba
+    description: Informations de base des joueurs NBA
   - name: OpponentStats
     description: Statistiques des adversaires
   - name: Players
@@ -21,6 +25,8 @@ tags:
     description: Annuaire des joueurs
   - name: PlayerParMatch
     description: Statistiques des joueurs par match
+  - name: Prediction
+    description: Prédictions des matchs
   - name: Teams
     description: Gestion des équipes
   - name: TeamStats
@@ -29,6 +35,126 @@ tags:
     description: Gestion et authentification des utilisateurs
 
 paths:
+  /abas:
+    get:
+      summary: Obtenez toutes les informations de la table aba
+      tags: [Aba]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Liste des données aba
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ABA"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
+          description: Aucune donnée aba trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No abaS info found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching abaS"
+  /aba/{saison}/{abr_equipe}:
+    parameters:
+      - in: path
+        name: saison
+        required: true
+        schema:
+          type: integer
+          example: 2023
+        description: Année de la saison
+      - in: path
+        name: abr_equipe
+        required: true
+        schema:
+          type: string
+          example: "LAL"
+        description: Abréviation de l'équipe
+    get:
+      summary: Obtenez les informations aba pour une équipe et une saison
+      tags: [Aba]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Donnée aba trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ABA"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameter"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
+          description: Donnée aba non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Aba info not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching aba"
+
   /advanceds:
     get:
       summary: Obtenez toutes les statistiques avancées des joueurs
@@ -576,6 +702,126 @@ paths:
                   error:
                     type: string
                     example: "Error while deleting match"
+
+  /nbas:
+    get:
+      summary: Obtenez toutes les informations de la table NBA
+      tags: [Nba]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Liste des données NBA
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NBA"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
+          description: Aucune donnée NBA trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No nbas info found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching nbas"
+  /nba/{saison}/{abr_equipe}:
+    parameters:
+      - in: path
+        name: saison
+        required: true
+        schema:
+          type: integer
+          example: 2023
+        description: Année de la saison
+      - in: path
+        name: abr_equipe
+        required: true
+        schema:
+          type: string
+          example: "LAL"
+        description: Abréviation de l'équipe
+    get:
+      summary: Obtenez les informations NBA pour une équipe et une saison (auth requise)
+      tags: [Nba]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Donnée NBA trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/NBA"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameter"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
+          description: Donnée NBA non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Nba info not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while fetching nba"
 
   /opponentsStatsParMatch:
     get:
@@ -1775,6 +2021,148 @@ paths:
                   error:
                     type: string
                     example: "Error while deleting user"
+
+  /prediction/team/{abr_home}/{abr_away}:
+    parameters:
+      - in: path
+        name: abr_home
+        required: true
+        schema:
+          type: string
+          example: "LAL"
+        description: Abréviation de l'équipe à domicile
+      - in: path
+        name: abr_away
+        required: true
+        schema:
+          type: string
+          example: "BOS"
+        description: Abréviation de l'équipe à l'extérieur
+    get:
+      summary: Prédiction du match entre deux équipes
+      tags: [Prediction]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Prédiction du match avec les statistiques simulées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prediction:
+                    type: object
+                    properties:
+                      winner:
+                        type: string
+                        example: "abr_home"
+                      percent:
+                        type: number
+                        format: float
+                        example: 70
+                  matchPrediction:
+                    type: object
+                    properties:
+                      minute_par_match:
+                        type: number
+                        example: 241.7
+                      fg_par_match:
+                        type: number
+                        example: 43.29
+                      fga_par_match:
+                        type: number
+                        example: 91.84
+                      fg_pourcent:
+                        type: number
+                        example: 0.4715
+                      x3p_par_match:
+                        type: number
+                        example: 13.49
+                      x3pa_par_match:
+                        type: number
+                        example: 37.10
+                      x3p_pourcent:
+                        type: number
+                        example: 0.3627
+                      x2p_par_match:
+                        type: number
+                        example: 29.82
+                      x2pa_par_match:
+                        type: number
+                        example: 54.71
+                      x2p_pourcent:
+                        type: number
+                        example: 0.5448
+                      ft_par_match:
+                        type: number
+                        example: 17.66
+                      fta_par_match:
+                        type: number
+                        example: 22.35
+                      ft_pourcent:
+                        type: number
+                        example: 0.7903
+                      orb_par_match:
+                        type: number
+                        example: 11.83
+                      drb_par_match:
+                        type: number
+                        example: 33.04
+                      trb_par_match:
+                        type: number
+                        example: 44.86
+                      ast_par_match:
+                        type: number
+                        example: 27.74
+                      stl_par_match:
+                        type: number
+                        example: 8.03
+                      blk_par_match:
+                        type: number
+                        example: 4.75
+                      tov_par_match:
+                        type: number
+                        example: 14.26
+                      pf_par_match:
+                        type: number
+                        example: 19.20
+                      pts_par_match:
+                        type: number
+                        example: 117.75
+                      possession:
+                        type: number
+                        example: 104.10
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login requis)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while predicting match"
 
   /teams:
     get:

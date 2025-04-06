@@ -411,6 +411,7 @@ paths:
                     example: "Player's advanced info deleted"
         "400":
           description: Paramètres manquants
+
           content:
             application/json:
               schema:
@@ -421,6 +422,7 @@ paths:
                     example: "Missing parameters"
         "403":
           description: Accès refusé (login & admin)
+
           content:
             application/json:
               schema:
@@ -431,6 +433,7 @@ paths:
                     example: "Access denied. You must be an admin."
         "404":
           description: Statistique avancée non trouvée
+
           content:
             application/json:
               schema:
@@ -459,6 +462,7 @@ paths:
       responses:
         200:
           description: Liste des matchs
+
           content:
             application/json:
               schema:
@@ -513,6 +517,7 @@ paths:
       responses:
         201:
           description: Match créé avec succès
+
           content:
             application/json:
               schema:
@@ -533,6 +538,7 @@ paths:
                     example: "Missing parameters"
         403:
           description: Accès refusé (login & admin)
+
           content:
             application/json:
               schema:
@@ -689,7 +695,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  error:
+                  message:
                     type: string
                     example: "Match not found"
         500:

@@ -31,6 +31,8 @@ paths:
     get:
       tags: [Users]
       summary: Récupère tous les utilisateurs
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Liste des utilisateurs
@@ -50,6 +52,16 @@ paths:
                   error:
                     type: string
                     example: "No users found"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
         "500":
           description: Erreur serveur
           content:
@@ -63,7 +75,9 @@ paths:
   /user:
     post:
       tags: [Users]
-      summary: Crée un nouvel utilisateur
+      summary: Crée un nouvel utilisateur (Admin uniquement)
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -94,7 +108,7 @@ paths:
                     type: string
                     example: "User created"
         "400":
-          description: Requête invalide
+          description: ID manquant
           content:
             application/json:
               schema:
@@ -102,7 +116,17 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "User created"
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -114,16 +138,18 @@ paths:
                     type: string
                     example: "Error while creating user"
   /user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID de l'utilisateur
     get:
       tags: [Users]
       summary: Récupère un utilisateur par son ID
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID de l'utilisateur
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: L'utilisateur trouvé
@@ -141,6 +167,16 @@ paths:
                   error:
                     type: string
                     example: "User not found"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
         "500":
           description: Erreur serveur
           content:
@@ -153,16 +189,9 @@ paths:
                     example: "Error while fetching user"
     patch:
       tags: [Users]
-      summary: Met à jour un utilisateur
+      summary: Met à jour un utilisateur (Admin uniquement)
       security:
         - bearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID de l'utilisateur
       requestBody:
         required: true
         content:
@@ -202,6 +231,16 @@ paths:
                   error:
                     type: string
                     example: "Email is missing"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -214,16 +253,9 @@ paths:
                     example: "Error while updating user"
     delete:
       tags: [Users]
-      summary: Supprime un utilisateur
+      summary: Supprime un utilisateur (Admin uniquement)
       security:
         - bearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID de l'utilisateur
       responses:
         "200":
           description: Utilisateur supprimé avec succès
@@ -245,6 +277,16 @@ paths:
                   error:
                     type: string
                     example: "User not found"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -326,8 +368,10 @@ paths:
     get:
       summary: Récupère la liste des joueurs
       tags: [Players]
+      security:
+        - bearerAuth: []
       responses:
-        200:
+        "200":
           description: Liste des joueurs récupérée
           content:
             application/json:
@@ -338,7 +382,17 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PlayerCareerInfo"
-        404:
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
           description: Aucun joueur trouvé
           content:
             application/json:
@@ -348,7 +402,7 @@ paths:
                   error:
                     type: string
                     example: "No players found"
-        500:
+        "500":
           description: Serveur error
           content:
             application/json:
@@ -360,23 +414,43 @@ paths:
                     example: "Error while fetching players"
   /player:
     post:
-      summary: Ajoute un joueur
+      summary: Ajoute un joueur (Admin uniquement)
       tags: [Players]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PlayerCareerInfo"
+              type: object
+              required:
+                - id_joueur
+                - nom_joueur
+                - prem_saison
+                - dern_saison
+              properties:
+                id_joueur:
+                  type: integer
+                  example: 123
+                nom_joueur:
+                  type: string
+                  example: "John Doe"
+                prem_saison:
+                  type: integer
+                  example: 1990
+                dern_saison:
+                  type: integer
+                  example: 2000
       responses:
-        201:
+        "201":
           description: Joueur ajouté
           content:
             application/json:
               schema:
                 type: object
                 example: "Player added"
-        400:
+        "400":
           description: Erreur de validation
           content:
             application/json:
@@ -386,7 +460,17 @@ paths:
                   error:
                     type: string
                     example: "Missing data"
-        500:
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
           description: Serveur error
           content:
             application/json:
@@ -396,17 +480,19 @@ paths:
                   error:
                     type: string
                     example: "Error while adding player"
-  /player/{id}:
+  /player/{id_joueur}:
+    parameters:
+      - name: id_joueur
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID du joueur
     get:
       tags: [Players]
       summary: Récupère un joueur par son ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID du joueur
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Le joueur trouvé
@@ -414,6 +500,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PlayerCareerInfo"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
         "404":
           description: Joueur non trouvé
           content:
@@ -436,14 +532,9 @@ paths:
                     example: "Error while fetching player"
     patch:
       tags: [Players]
-      summary: Met à jour les informations d'un joueur
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID du joueur
+      summary: Met à jour les informations d'un joueur (Admin uniquement)
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -478,6 +569,16 @@ paths:
                   message:
                     type: string
                     example: "Player updated successfully"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "404":
           description: Joueur non trouvé
           content:
@@ -500,14 +601,9 @@ paths:
                     example: "Error while updating player"
     delete:
       tags: [Players]
-      summary: Supprime un joueur par son ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID du joueur
+      summary: Supprime un joueur par son ID (Admin uniquement)
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Joueur supprimé avec succès
@@ -519,6 +615,16 @@ paths:
                   message:
                     type: string
                     example: "Player deleted"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "404":
           description: Joueur non trouvé
           content:
@@ -526,13 +632,25 @@ paths:
               schema:
                 type: object
                 example: "Player not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting player"
 
   /advanceds:
     get:
       summary: Obtenez toutes les statistiques avancées des joueurs
       tags: [Advanced]
+      security:
+        - bearerAuth: []
       responses:
-        200:
+        "200":
           description: Liste des statistiques avancées des joueurs
           content:
             application/json:
@@ -543,7 +661,17 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Advanced"
-        404:
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
           description: Aucune statistique avancée trouvée
           content:
             application/json:
@@ -552,8 +680,8 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Missing ID"
-        500:
+                    example: "Missing parameters"
+        "500":
           description: Erreur serveur
           content:
             application/json:
@@ -563,31 +691,86 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching advanced stats"
-  /advanced/{id}/{saison}/{abr_equipe}:
+  /advanced:
+    post:
+      summary: Crée une statistique avancée pour un joueur (Admin uniquement)
+      tags: [Advanced]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Advanced"
+      responses:
+        "201":
+          description: Statistique avancée créée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info created"
+        "400":
+          description: Données manquantes ou invalides
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missign parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating player's advanced info"
+  /advanced/{id_joueur}/{saison}/{abr_equipe}:
+    parameters:
+      - in: path
+        name: id_joueur
+        required: true
+        schema:
+          type: integer
+        description: Identifiant du joueur
+      - in: path
+        name: saison
+        required: true
+        schema:
+          type: integer
+        description: Année de la saison
+      - in: path
+        name: abr_equipe
+        required: true
+        schema:
+          type: string
+        description: Abréviation de l'équipe
     get:
       summary: Obtenez des statistiques avancées sur un joueur par ID
       tags: [Advanced]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-          description: Identifiant du joueur
-        - in: path
-          name: saison
-          required: true
-          schema:
-            type: integer
-          description: Année de la saison
-        - in: path
-          name: abr_equipe
-          required: true
-          schema:
-            type: string
-          description: Abréviation de l'équipe
+      security:
+        - bearerAuth: []
       responses:
-        200:
+        "200":
           description: Statistiques avancées trouvées
           content:
             application/json:
@@ -596,7 +779,7 @@ paths:
                 properties:
                   data:
                     $ref: "#/components/schemas/Advanced"
-        400:
+        "400":
           description: ID manquant
           content:
             application/json:
@@ -606,7 +789,17 @@ paths:
                   error:
                     type: string
                     example: "Missing parameters"
-        404:
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
           description: Statistiques avancées non trouvées
           content:
             application/json:
@@ -616,7 +809,7 @@ paths:
                   error:
                     type: string
                     example: "Player's advanced info not found"
-        500:
+        "500":
           description: Erreur serveur
           content:
             application/json:
@@ -625,7 +818,115 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Internal server error"
+                    example: "Error while fetching player's advanced info"
+    patch:
+      summary: Met à jour les statistiques avancées d’un joueur (Admin uniquement)
+      tags: [Advanced]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Advanced"
+      responses:
+        "200":
+          description: Statistique avancée mise à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info updated"
+        "400":
+          description: Données ou paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while updating player's advanced info"
+    delete:
+      summary: Supprime les statistiques avancées d’un joueur (Admin uniquement)
+      tags: [Advanced]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Statistique avancée supprimée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's advanced info deleted"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "404":
+          description: Statistique avancée non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player's advanced info not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting player's advanced info"
 
   /opponentsStatsParMatch:
     get:
@@ -663,29 +964,86 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching opponent stats"
-  /opponentStatsParMatch/{saison}/{abr}/{qualif}:
+  /opponentStatsParMatch:
+    post:
+      tags: [OpponentStats]
+      summary: Crée de nouvelles statistiques d'adversaire par match (Admin uniquement)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpponentStatsParMatch"
+      responses:
+        "201":
+          description: Statistiques d'adversaire créées avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Opponent's stats par match created"
+        "400":
+          description: Données invalides
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "404":
+          description: Équipe non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Team not found"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating opponent's stats par match"
+  /opponentStatsParMatch/{saison}/{abr_equipe}:
+    parameters:
+      - in: path
+        name: saison
+        required: true
+        schema:
+          type: integer
+        description: Année de la saison
+      - in: path
+        name: abr_equipe
+        required: true
+        schema:
+          type: string
+        description: Abréviation de l'équipe
     get:
       summary: Obtenez les statistiques des adversaires par saison et équipe
       tags: [OpponentStats]
-      parameters:
-        - in: path
-          name: saison
-          required: true
-          schema:
-            type: integer
-          description: Année de la saison
-        - in: path
-          name: abr
-          required: true
-          schema:
-            type: string
-          description: Abréviation de l'équipe
-        - in: path
-          name: qualif
-          required: true
-          schema:
-            type: boolean
-            example: true
       responses:
         200:
           description: Statistiques des adversaires trouvées
@@ -726,6 +1084,124 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching opponent stats"
+    patch:
+      tags: [OpponentStats]
+      summary: Met à jour les statistiques d'adversaire pour une équipe (Admin uniquement)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpponentStatsParMatch"
+      responses:
+        "201":
+          description: Statistiques d'adversaire mises à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Opponent's stats par match updated"
+        "400":
+          description: Données invalides ou paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "404":
+          description: Équipe ou statistiques non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Opponent's stats par match not found"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating opponent's stats par match"
+    delete:
+      tags: [OpponentStatsParMatch]
+      summary: Supprime les statistiques d'adversaire pour une équipe
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Statistiques d'adversaire supprimées avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Opponent's stats par match deleted"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "404":
+          description: Statistiques d'adversaire non trouvées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Opponent's stats par match not found"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting opponent's stats par match"
 
   /playersDirectory:
     get:
@@ -1153,7 +1629,7 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching stats"
-  /teamStatsParMatch/{saison}/{arb_team}/{qualif}:
+  /teamStatsParMatch/{saison}/{arb_team}:
     get:
       summary: Obtenez les statistiques d'une équipe par match en fonction de la saison, de l'équipe, de la ligue et de la qualification
       tags: [TeamStats]
@@ -1170,12 +1646,6 @@ paths:
           schema:
             type: string
           description: Abréviation de l'équipe
-        - in: path
-          name: qualif
-          required: true
-          schema:
-            type: boolean
-          description: Statut de qualification
       responses:
         200:
           description: Statistiques d'équipe trouvées
@@ -1317,6 +1787,7 @@ components:
           type: integer
           format: int32
           description: Identifiant unique du joueur
+          example: 1
         nom_joueur:
           type: string
           maxLength: 100
@@ -1607,7 +2078,6 @@ components:
       required:
         - abr_equipe
         - saison
-        - qualif
 
     PlayerDirectory:
       type: object
@@ -1796,7 +2266,6 @@ components:
       required:
         - saison
         - abr_equipe
-        - qualif
 
     Match:
       type: object
@@ -1870,3 +2339,8 @@ components:
       required:
         - abr_equipe
         - saison
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

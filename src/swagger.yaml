@@ -31,6 +31,8 @@ paths:
     get:
       tags: [Users]
       summary: Récupère tous les utilisateurs
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Liste des utilisateurs
@@ -50,6 +52,16 @@ paths:
                   error:
                     type: string
                     example: "No users found"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
         "500":
           description: Erreur serveur
           content:
@@ -63,7 +75,9 @@ paths:
   /user:
     post:
       tags: [Users]
-      summary: Crée un nouvel utilisateur
+      summary: Crée un nouvel utilisateur (Admin uniquement)
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -103,6 +117,16 @@ paths:
                   error:
                     type: string
                     example: "User created"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -117,6 +141,8 @@ paths:
     get:
       tags: [Users]
       summary: Récupère un utilisateur par son ID
+      security:
+        - bearerAuth: []
       parameters:
         - name: userId
           in: path
@@ -141,6 +167,16 @@ paths:
                   error:
                     type: string
                     example: "User not found"
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
         "500":
           description: Erreur serveur
           content:
@@ -153,7 +189,7 @@ paths:
                     example: "Error while fetching user"
     patch:
       tags: [Users]
-      summary: Met à jour un utilisateur
+      summary: Met à jour un utilisateur (Admin uniquement)
       security:
         - bearerAuth: []
       parameters:
@@ -202,6 +238,16 @@ paths:
                   error:
                     type: string
                     example: "Email is missing"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -214,7 +260,7 @@ paths:
                     example: "Error while updating user"
     delete:
       tags: [Users]
-      summary: Supprime un utilisateur
+      summary: Supprime un utilisateur (Admin uniquement)
       security:
         - bearerAuth: []
       parameters:
@@ -245,6 +291,16 @@ paths:
                   error:
                     type: string
                     example: "User not found"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
         "500":
           description: Erreur serveur
           content:
@@ -2036,3 +2092,8 @@ components:
       required:
         - abr_equipe
         - saison
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

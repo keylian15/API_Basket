@@ -6,6 +6,6 @@ export const predictionRouter = Router();
 
 predictionRouter.get(
   "/prediction/team/:abr_home/:abr_away",
-  verifyJWT,
+  // verifyJWT,
   predictionTeam
 );

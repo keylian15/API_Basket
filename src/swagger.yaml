@@ -1208,7 +1208,7 @@ paths:
       summary: Obtenez le répertoire complet des joueurs
       tags: [PlayerDirectory]
       responses:
-        200:
+        "200":
           description: Liste du répertoire des joueurs
           content:
             application/json:
@@ -1219,7 +1219,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PlayerDirectory"
-        404:
+        "404":
           description: Aucun répertoire de joueurs trouvé
           content:
             application/json:
@@ -1229,7 +1229,7 @@ paths:
                   error:
                     type: string
                     example: "Missing ID"
-        500:
+        "500":
           description: Erreur serveur
           content:
             application/json:
@@ -1239,30 +1239,78 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching user"
+  /playerDirectory:
+    post:
+      summary: Ajoutez un joueur au répertoire (Admin uniquement)
+      tags: [PlayerDirectory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerDirectory"
+      responses:
+        "200":
+          description: Joueur ajouté avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                example: "Player's directory created"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameter"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while creating user"
   /playerDirectory/{nom_joueur}/{dateNaissance}:
+    parameters:
+      - in: path
+        name: nom_joueur
+        required: true
+        schema:
+          type: string
+          example: "michael jordan"
+          description: Nom du joueur
+        description: Nom du joueur
+
+      - in: path
+        name: dateNaissance
+        required: true
+        schema:
+          type: string
+          format: date
+          example: "1990-01-01"
+        description: Date de naissance
     get:
       summary: Obtenez le répertoire d'un joueur par nom et date de naissance
       tags: [PlayerDirectory]
-      parameters:
-        - in: path
-          name: nom_joueur
-          required: true
-          schema:
-            type: string
-            example: "michael jordan"
-            description: Nom du joueur
-          description: Nom du joueur
-
-        - in: path
-          name: dateNaissance
-          required: true
-          schema:
-            type: string
-            format: date
-            example: "1990-01-01"
-          description: Date de naissance
       responses:
-        200:
+        "200":
           description: Répertoire du joueur trouvé
           content:
             application/json:
@@ -1271,7 +1319,7 @@ paths:
                 properties:
                   data:
                     $ref: "#/components/schemas/PlayerDirectory"
-        400:
+        "400":
           description: Paramètres manquants
           content:
             application/json:
@@ -1281,7 +1329,17 @@ paths:
                   error:
                     type: string
                     example: "Missing ID"
-        404:
+        "403":
+          description: Accès refusé (login)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be logged in."
+        "404":
           description: Répertoire du joueur non trouvé
           content:
             application/json:
@@ -1291,7 +1349,7 @@ paths:
                   error:
                     type: string
                     example: "Player not found"
-        500:
+        "500":
           description: Erreur serveur
           content:
             application/json:
@@ -1301,6 +1359,124 @@ paths:
                   error:
                     type: string
                     example: "Error while fetching user"
+    patch:
+      tags: [PlayerDirectory]
+      summary: Met à jour les informations d'un joueur
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerDirectory"
+      responses:
+        "200":
+          description: Informations du joueur mises à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's directory updated"
+        "400":
+          description: Données invalides ou paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "404":
+          description: Joueur non trouvé dans l'annuaire
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player's directory not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while updating player's directory"
+    delete:
+      tags: [PlayerDirectory]
+      summary: Supprime un joueur de l'annuaire
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Joueur supprimé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Player's directory deleted"
+        "400":
+          description: Paramètres manquants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing parameters"
+        "403":
+          description: Accès refusé (login & admin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Access denied. You must be an admin."
+        "404":
+          description: Joueur non trouvé dans l'annuaire
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Player's directory not found"
+        "500":
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error while deleting player's directory"
 
   /playersParMatch:
     get:

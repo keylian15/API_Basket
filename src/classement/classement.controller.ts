@@ -407,7 +407,7 @@ export const getClJs3Pt = async (req: Request, res: Response) => {
 
 export const getClsTmPt = async (_req: Request, res: Response) => {
   try {
-    const classements = await prisma.team_stats_par_match.findMany();
+    const classements = await prisma.classement_team_pts.findMany();
     if (classements.length === 0) {
       res.status(404).json({ error: "No classements found" });
     } else {

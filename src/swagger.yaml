@@ -13,6 +13,8 @@ tags:
     description: Informations de base des joueurs ABA
   - name: Advanced
     description: Informations avancées des joueurs
+  - name: Classement
+    description: Classement des joueurs et équipes
   - name: Match
     description: Informations sur les matchs
   - name: Nba
@@ -452,6 +454,946 @@ paths:
                   error:
                     type: string
                     example: "Error while deleting player's advanced info"
+
+  /classement/joueurs/contre:
+    get:
+      summary: Récupérer le classement des joueurs pour les contres
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classements des joueurs pour les contres récupérés avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_contre:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/contre/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement d'un joueur spécifique pour les contres
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id_joueur
+          in: path
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - name: saison
+          in: path
+          required: true
+          description: La saison pour laquelle récupérer le classement
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Classement du joueur pour les contres récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_contre:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/fg:
+    get:
+      summary: Récupérer le classement des joueurs pour les paniers à 2 points
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classements des joueurs pour les paniers à 2 points récupérés avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_fg:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/fg/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement d'un joueur spécifique pour les paniers à 2 points
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id_joueur
+          in: path
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - name: saison
+          in: path
+          required: true
+          description: La saison pour laquelle récupérer le classement
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Classement du joueur pour les paniers à 2 points récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_fg::
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/ft:
+    get:
+      summary: Récupérer le classement des joueurs pour les lancers francs
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classements des joueurs pour les lancers francs récupérés avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_ft:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/ft/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement d'un joueur spécifique pour les lancers francs
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id_joueur
+          in: path
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - name: saison
+          in: path
+          required: true
+          description: La saison pour laquelle récupérer le classement
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Classement du joueur pour les lancers francs récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_ft:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/interceptions:
+    get:
+      summary: Récupérer le classement des joueurs pour les interceptions
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classements des joueurs pour les interceptions récupérés avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_interception:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/interceptions/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement d'un joueur spécifique pour les interceptions
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id_joueur
+          in: path
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - name: saison
+          in: path
+          required: true
+          description: La saison pour laquelle récupérer le classement
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Classement du joueur pour les interceptions récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_interception:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/minutes:
+    get:
+      summary: Récupérer le classement des joueurs par minutes
+      description: Récupère la liste des classements des joueurs par le nombre de minutes jouées.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par minutes récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_minute:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+  /classement/joueurs/minutes/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par minutes pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de minutes jouées.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_minute:
+                        type: integer
+        "403":
+          description: Accès refusé
+        "400":
+          description: Paramètre manquant
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/passes:
+    get:
+      summary: Récupérer le classement des joueurs par passes
+      description: Récupère la liste des classements des joueurs par le nombre de passes effectuées.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par passes récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_passe:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/passes/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par passes pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de passes effectuées.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_passe:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/points:
+    get:
+      summary: Récupérer le classement des joueurs par points
+      description: Récupère la liste des classements des joueurs par le nombre de points marqués.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par points récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_points:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/points/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par points pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de points marqués.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_points:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/rebonds:
+    get:
+      summary: Récupérer le classement des joueurs par rebonds
+      description: Récupère la liste des classements des joueurs par le nombre de rebonds effectués.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par rebonds récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_rebonds:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/rebonds/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par rebonds pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de rebonds effectués.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_rebonds:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/tir:
+    get:
+      summary: Récupérer le classement des joueurs par tirs
+      description: Récupère la liste des classements des joueurs par le nombre de tirs effectués.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par tirs récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_tir:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/tir/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par tirs pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de tirs effectués.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_tir:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/trois_pts:
+    get:
+      summary: Récupérer le classement des joueurs par trois points
+      description: Récupère la liste des classements des joueurs par le nombre de trois points marqués.
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des joueurs par trois points récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_joueur:
+                          type: integer
+                        nom_joueur:
+                          type: integer
+                        position:
+                          type: integer
+                        saison:
+                          type: integer
+                        stat_trois_points:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+
+  /classement/joueurs/trois_pts/{id_joueur}/{saison}:
+    get:
+      summary: Récupérer le classement des joueurs par trois points pour une saison et un joueur
+      description: Récupère le classement pour un joueur spécifique et une saison donnée, basé sur le nombre de trois points marqués.
+      tags: [Classement]
+      parameters:
+        - in: path
+          name: id_joueur
+          required: true
+          description: L'ID du joueur
+          schema:
+            type: integer
+        - in: path
+          name: saison
+          required: true
+          description: La saison du classement
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement du joueur pour la saison récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id_joueur:
+                        type: integer
+                      nom_joueur:
+                        type: integer
+                      position:
+                        type: integer
+                      saison:
+                        type: integer
+                      stat_trois_points:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement du joueur pour la saison non trouvé
+        "500":
+          description: Erreur serveur interne
+  /classement/teams/pts:
+    get:
+      summary: Récupérer le classement des équipes par points
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Classement des équipes récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        saison:
+                          type: integer
+                        abr_equipe:
+                          type: string
+                        classement:
+                          type: integer
+                        pts_par_match:
+                          type: integer
+        "403":
+          description: Accès refusé
+        "404":
+          description: Aucun classement trouvé
+        "500":
+          description: Erreur serveur interne
+  /classement/teams/pts/{saison}/{abr_equipe}:
+    get:
+      summary: Récupérer le classement d'une équipe spécifique par points
+      tags: [Classement]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: saison
+          in: path
+          required: true
+          description: La saison pour laquelle récupérer le classement
+          schema:
+            type: integer
+        - name: abr_equipe
+          in: path
+          required: true
+          description: L'abréviation de l'équipe
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Classement de l'équipe récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      saison:
+                        type: integer
+                      abr_equipe:
+                        type: string
+                      classement:
+                        type: integer
+                      pts_par_match:
+                        type: integer
+        "400":
+          description: Paramètre manquant
+        "403":
+          description: Accès refusé
+        "404":
+          description: Classement de l'équipe non trouvé
+        "500":
+          description: Erreur serveur interne
 
   /matchs:
     get:

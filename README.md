@@ -161,23 +161,23 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/package-lock.json'>package-lock.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/tsconfig.json'>tsconfig.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/jest.config.ts'>jest.config.ts</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/commitlint.config.js'>commitlint.config.js</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/package.json'>package.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			</table>
 		</blockquote>
@@ -188,15 +188,15 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/client.ts'>client.ts</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/index.ts'>index.ts</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/swagger.yaml'>swagger.yaml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			</table>
 			<details>
@@ -205,11 +205,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/predictions/predictions.controller.ts'>predictions.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/predictions/predictions.router.ts'>predictions.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -220,11 +220,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/playersParMatch/playersParMatch.router.ts'>playersParMatch.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/playersParMatch/playersParMatch.controller.ts'>playersParMatch.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -235,11 +235,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/playersDirectory/playersDirectory.controller.ts'>playersDirectory.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/playersDirectory/playersDirectory.router.ts'>playersDirectory.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -250,11 +250,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/nba/nba.router.ts'>nba.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/nba/nab.controller.ts'>nab.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -265,11 +265,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/advanced/advanced.router.ts'>advanced.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/advanced/advanced.controller.ts'>advanced.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -280,11 +280,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/players/players.controller.ts'>players.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/players/players.router.ts'>players.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -295,11 +295,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/opponentStatsParMatch/opponentStatsParMatch.controller.ts'>opponentStatsParMatch.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/opponentStatsParMatch/opponentStatsParMatch.router.ts'>opponentStatsParMatch.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -310,11 +310,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/matchs/matchs.router.ts'>matchs.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/matchs/matchs.controller.ts'>matchs.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -325,11 +325,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/users/users.router.ts'>users.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/users/users.controller.ts'>users.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -340,7 +340,7 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/commun/commun.middleware .ts'>commun.middleware .ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -351,11 +351,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/teamsStatsParMatch/teamsStatsParMatch.router.ts'>teamsStatsParMatch.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/teamsStatsParMatch/teamsStatsParMatch.controller.ts'>teamsStatsParMatch.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -366,11 +366,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/teams/teams.controller.ts'>teams.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/teams/teams.router.ts'>teams.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -381,11 +381,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/classement/classement.controller.ts'>classement.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/classement/classement.router.ts'>classement.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -396,11 +396,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/aba/aba.router.ts'>aba.router.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/src/aba/aba.controller.ts'>aba.controller.ts</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -413,7 +413,7 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/prisma/schema.prisma'>schema.prisma</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			</table>
 		</blockquote>
@@ -424,11 +424,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/coverage-final.json'>coverage-final.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov.info'>lcov.info</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td></td>
 			</tr>
 			</table>
 			<details>
@@ -437,27 +437,27 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/block-navigation.js'>block-navigation.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/base.css'>base.css</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/prettify.css'>prettify.css</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/sorter.js'>sorter.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/prettify.js'>prettify.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/index.html'>index.html</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td></td>
 					</tr>
 					</table>
 					<details>
@@ -466,11 +466,11 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/index.html'>index.html</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/index.ts.html'>index.ts.html</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td></td>
 							</tr>
 							</table>
 							<details>
@@ -479,15 +479,15 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/players/players.router.ts.html'>players.router.ts.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/players/players.controller.ts.html'>players.controller.ts.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/players/index.html'>index.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -498,15 +498,15 @@ Full API documentation is available at: [http://62.72.18.63:11042/api-docs/](htt
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/teams/index.html'>index.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/teams/teams.router.ts.html'>teams.router.ts.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/keylian15/API_Basket/blob/master/coverage/lcov-report/src/teams/teams.controller.ts.html'>teams.controller.ts.html</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td></td>
 									</tr>
 									</table>
 								</blockquote>

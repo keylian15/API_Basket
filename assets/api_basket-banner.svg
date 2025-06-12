@@ -13,5 +13,5 @@
         <rect width="800" height="200" fill="url(#bg-gradient)" rx="15" ry="15"/>
         <text x="400" y="100" font-family="Arial, sans-serif" font-size="48"
         font-weight="bold" text-anchor="middle" dominant-baseline="middle"
-        fill="#FFFFFF" filter="url(#shadow)">WEB_BASKET</text>
+        fill="#FFFFFF" filter="url(#shadow)">API_BASKET</text>
     </svg>
